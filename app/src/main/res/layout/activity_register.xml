@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    tools:context=".RegisterActivity">
+
+    <ImageView
+        android:id="@+id/register_circle_1"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_marginTop="-180dp"
+        android:src="@drawable/circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/orange2"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/register_circle_2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="-100dp"
+        android:layout_marginTop="-40dp"
+        android:src="@drawable/circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/orange1"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/register_circle_3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="-100dp"
+        android:layout_marginBottom="-40dp"
+        android:src="@drawable/circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/orange2"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/register_circle_4"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="-240dp"
+        android:src="@drawable/circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/orange1"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/register_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="410dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="30dp"
+        android:paddingRight="20dp"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/register_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/register_profilePhoto_imageView"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/imageView_round_color"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/profile_photo"
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/register_username_editTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:hint="@string/username_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/orange2"
+                    app:endIconMode="clear_text"
+                    app:boxBackgroundColor="@color/edittext_color"
+                    app:boxStrokeColor="@color/orange2"
+                    app:hintTextColor="@color/orange2"
+                    android:importantForAutofill="no">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/register_username_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="50"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:inputType="textPersonName"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/register_password_editTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="8"
+                    app:startIconDrawable="@drawable/ic_key"
+                    app:startIconTint="@color/orange2"
+                    app:endIconMode="password_toggle"
+                    app:boxBackgroundColor="@color/edittext_color"
+                    app:boxStrokeColor="@color/orange2"
+                    app:hintTextColor="@color/orange2"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:importantForAutofill="no">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/register_password_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:inputType="textPassword"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/register_password2_editTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password2_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="8"
+                    app:startIconDrawable="@drawable/ic_key"
+                    app:startIconTint="@color/orange2"
+                    app:endIconMode="password_toggle"
+                    app:boxBackgroundColor="@color/edittext_color"
+                    app:boxStrokeColor="@color/orange2"
+                    app:hintTextColor="@color/orange2"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:importantForAutofill="no">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/register_password2_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:inputType="textPassword"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/register_email_editTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    android:hint="@string/email_text"
+                    app:startIconDrawable="@drawable/ic_email"
+                    app:startIconTint="@color/orange2"
+                    app:endIconMode="clear_text"
+                    app:boxBackgroundColor="@color/edittext_color"
+                    app:boxStrokeColor="@color/orange2"
+                    app:hintTextColor="@color/orange2"
+                    android:importantForAutofill="no">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/register_email_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="50"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:inputType="textEmailAddress"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/register_currentCar_editTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:hint="@string/current_car_text"
+                    app:startIconDrawable="@drawable/ic_car"
+                    app:startIconTint="@color/orange2"
+                    app:endIconMode="clear_text"
+                    app:boxBackgroundColor="@color/edittext_color"
+                    app:boxStrokeColor="@color/orange2"
+                    app:hintTextColor="@color/orange2"
+                    android:importantForAutofill="no">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/register_currentCar_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:inputType="textPersonName"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/register_location_editTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="@string/location_text"
+                    app:startIconDrawable="@drawable/ic_location"
+                    app:startIconTint="@color/orange2"
+                    app:endIconMode="dropdown_menu"
+                    app:boxStrokeColor="@color/orange2"
+                    app:boxBackgroundColor="@color/edittext_color"
+                    app:hintTextColor="@color/orange2"
+                    android:importantForAutofill="no">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/register_location_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="?android:attr/textColorPrimary"
+                        tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register_register_button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/orange3"
+        android:text="@string/register_text"
+        android:textAllCaps="false"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_cardView"
+        tools:ignore="TextContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

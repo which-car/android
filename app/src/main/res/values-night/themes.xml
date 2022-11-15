@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.WhichCar" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
@@ -11,10 +11,12 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <!-- Customize your theme here. -->
         <!-- translucent navigation bar -->
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:navigationIcon">@color/white</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
     <!-- custom alert dialog -->
     <style name="CustomAlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">

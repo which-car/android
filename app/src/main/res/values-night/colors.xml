@@ -13,8 +13,14 @@
 
     <color name="orange1">#EC2A0C</color>
     <color name="orange2">#FF530E</color>
+    <color name="orange3">#FFA216</color>
 
     <color name="blue1">#2D328F</color>
     <color name="blue2">#014A7F</color>
     <color name="blue3">#05BFEE</color>
+
+    <color name="edittext_color">#202124</color>
+    <color name="edittext_color2">#202124</color>
+
+    <color name="imageView_round_color">#FAFAFA</color>
 </resources>

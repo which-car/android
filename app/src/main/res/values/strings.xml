@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Which Car</string>
+    <string name="register_text">Kayıt Ol</string>
+    <string name="login_text">Giriş Yap</string>
+    <string name="password_text">Şifre</string>
+    <string name="username_text">Kullanıcı Adı</string>
+    <string name="welcome_text">Hoş Geldiniz</string>
+    <string name="app_title_text">WHICH CAR</string>
+    <string name="forgot_password_text">Şifremi Unuttum</string>
+    <string name="password2_text">Şifre (Tekrar)</string>
+    <string name="email_text">E-posta</string>
+    <string name="current_car_text">Mevcut Araba (İsteğe Bağlı)</string>
+    <string name="location_text">Konum (İsteğe Bağlı)</string>
 </resources>
