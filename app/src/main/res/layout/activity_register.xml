@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/orange2"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <ImageView
         android:id="@+id/register_circle_2"
@@ -54,12 +54,23 @@
         app:tint="@color/orange1"
         tools:ignore="ContentDescription" />
 
+    <ImageView
+        android:id="@+id/register_back_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/register_cardView"
         android:layout_width="match_parent"
-        android:layout_height="410dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="20dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
@@ -188,6 +199,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginStart="30dp"
+                    android:layout_marginBottom="30dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     android:hint="@string/email_text"
@@ -210,61 +222,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:id="@+id/register_currentCar_editTextLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:hint="@string/current_car_text"
-                    app:startIconDrawable="@drawable/ic_car"
-                    app:startIconTint="@color/orange2"
-                    app:endIconMode="clear_text"
-                    app:boxBackgroundColor="@color/edittext_color"
-                    app:boxStrokeColor="@color/orange2"
-                    app:hintTextColor="@color/orange2"
-                    android:importantForAutofill="no">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/register_currentCar_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:inputType="textPersonName"
-                        tools:ignore="TextContrastCheck" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:id="@+id/register_location_editTextLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:hint="@string/location_text"
-                    app:startIconDrawable="@drawable/ic_location"
-                    app:startIconTint="@color/orange2"
-                    app:endIconMode="dropdown_menu"
-                    app:boxStrokeColor="@color/orange2"
-                    app:boxBackgroundColor="@color/edittext_color"
-                    app:hintTextColor="@color/orange2"
-                    android:importantForAutofill="no">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/register_location_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColor="?android:attr/textColorPrimary"
-                        tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -275,7 +232,7 @@
         android:id="@+id/register_register_button"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/orange3"
         android:text="@string/register_text"
         android:textAllCaps="false"

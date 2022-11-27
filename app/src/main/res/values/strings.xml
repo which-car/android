@@ -11,4 +11,5 @@
     <string name="email_text">E-posta</string>
     <string name="current_car_text">Mevcut Araba (İsteğe Bağlı)</string>
     <string name="location_text">Konum (İsteğe Bağlı)</string>
+    <string name="continue_as_a_guest_text">Misafir Girişi</string>
 </resources>

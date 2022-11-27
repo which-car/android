@@ -71,7 +71,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/login_cardView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="255dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="230dp"
         android:layout_marginEnd="20dp"
@@ -154,9 +154,10 @@
             android:id="@+id/login_forgotPassword_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:text="@string/forgot_password_text"
             android:textSize="14sp" />
 
@@ -195,5 +196,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_login_button"
         tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/login_continueAsAGuest_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="85dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/continue_as_a_guest_text"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
