@@ -23,4 +23,6 @@
     <color name="edittext_color2">#202124</color>
 
     <color name="imageView_round_color">#FAFAFA</color>
+
+    <color name="bottom_navigation_bar_color_default">#FF000000</color>
 </resources>

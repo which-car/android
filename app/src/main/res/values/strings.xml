@@ -12,4 +12,8 @@
     <string name="current_car_text">Mevcut Araba (İsteğe Bağlı)</string>
     <string name="location_text">Konum (İsteğe Bağlı)</string>
     <string name="continue_as_a_guest_text">Misafir Girişi</string>
+    <string name="car_suggestion_text">Araç Önerisi</string>
+    <string name="car_suggestion_description_text">Kriterlere verilen yanıtlara göre araç önerisinde bulunan sistem.</string>
+    <string name="car_detail_text">Araç Detay</string>
+    <string name="car_detail_description_text">Seçilen aracın teknik verilerini gösteren ve yorum yapılabilinen sistem.</string>
 </resources>
