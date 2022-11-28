@@ -54,16 +54,6 @@
         app:tint="@color/blue2"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/android_logo_purple"
-        app:layout_constraintBottom_toTopOf="@+id/login_title_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="ContentDescription" />
-
     <TextView
         android:id="@+id/login_title_textView"
         android:layout_width="wrap_content"

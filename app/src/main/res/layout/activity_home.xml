@@ -8,222 +8,223 @@
     android:background="?attr/colorPrimary"
     tools:context=".HomeActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/home_container"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/home_splash_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/home_appbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/home_welcome_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/welcome_text"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold" />
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/home_collapsingToolbarLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                app:toolbarId="@+id/homeToolbar">
+        <TextView
+            android:id="@+id/home_username_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/username_text"
+            android:textColor="@color/white"
+            android:textSize="26sp" />
+        
+    </LinearLayout>
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/home_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
+    <LinearLayout
+        android:id="@+id/home_title_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="30dp"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        android:gravity="left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded">
 
-                </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:id="@+id/home_title_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/app_title_text"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/home_title_description_textView"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/home_title_description_text"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="italic" />
 
-                    <TextView
-                        android:id="@+id/home_appName_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/app_name"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/home_profile_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="30dp"
-                        android:src="@drawable/profile"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        tools:ignore="ContentDescription" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:id="@+id/home_menu_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        android:layout_marginTop="340dp">
 
         <LinearLayout
-            android:id="@+id/home_linearLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="150dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_appbar">
+            android:layout_marginBottom="50dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            tools:ignore="UselessParent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/carSuggestion_cardView"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/home_carSuggestion_button"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                app:cardCornerRadius="25dp">
+                android:layout_marginEnd="70dp"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                tools:ignore="UseCompoundDrawables">
 
-                <RelativeLayout
-                    android:id="@+id/carSuggestion_relativeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/blue3"
-                    android:padding="10dp">
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/suggestion"
+                    tools:ignore="ContentDescription" />
 
-                    <TextView
-                        android:id="@+id/carSuggestion_title_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/car_suggestion_text"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:ignore="RelativeOverlap,TextContrastCheck" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/car_suggestion_text"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="22sp" />
 
-                    <TextView
-                        android:id="@+id/carSuggestion_description_textView"
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="35dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/car_suggestion_description_text"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        tools:ignore="RelativeOverlap,TextContrastCheck" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/carSuggestion_car_imageView"
-                        android:layout_width="170dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginEnd="10dp"
-                        android:maxHeight="100dp"
-                        android:src="@drawable/car"
-                        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-                    <ImageView
-                        android:id="@+id/carSuggestion_suggestion_imageView"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:maxHeight="100dp"
-                        android:src="@drawable/suggestion"
-                        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-                </RelativeLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/carDetail_cardView"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/home_carDetail_button"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:focusable="true"
-                app:cardCornerRadius="25dp">
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                tools:ignore="UseCompoundDrawables">
 
-                <RelativeLayout
-                    android:id="@+id/carDetail_relativeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/orange3"
-                    android:padding="10dp">
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/magnifying_glass"
+                    tools:ignore="ContentDescription" />
 
-                    <TextView
-                        android:id="@+id/carDetail_title_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/car_detail_text"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:ignore="RelativeOverlap,TextContrastCheck" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/car_detail_text"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="22sp" />
 
-                    <TextView
-                        android:id="@+id/carDetail_description_textView"
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="35dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/car_detail_description_text"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        tools:ignore="RelativeOverlap,TextContrastCheck" />
-
-                    <ImageView
-                        android:id="@+id/carDetail_car_imageView"
-                        android:layout_width="170dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginEnd="10dp"
-                        android:maxHeight="100dp"
-                        android:src="@drawable/car2"
-                        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-                    <ImageView
-                        android:id="@+id/carDetail_detail_imageView"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:maxHeight="100dp"
-                        android:src="@drawable/magnifying_glass"
-                        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-                </RelativeLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:id="@+id/home_profile_button"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="70dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/profile_photo"
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/profile_text"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/home_about_button"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/info"
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/about_text"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/home_splash_imageView"
+        android:layout_width="580dp"
+        android:layout_height="710dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/home_background"
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

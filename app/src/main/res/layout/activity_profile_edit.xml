@@ -8,111 +8,68 @@
     android:background="?attr/colorPrimary"
     tools:context=".ProfileEditActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/profile_edit_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/profile_edit_appbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/profile_edit_collapsingToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                app:toolbarId="@+id/homeToolbar">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/profile_edit_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
-
-                </androidx.appcompat.widget.Toolbar>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/profile_edit_constraintLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/profile_edit_back_button"
-                        android:layout_width="25dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="12dp"
-                        android:src="@drawable/back"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/profile_edit_title_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="60dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/profile_edit_text"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/profile_edit_divider"
+    <ImageView
+        android:id="@+id/profile_edit_background"
         android:layout_width="wrap_content"
-        android:layout_height="3dp"
-        android:background="@color/divider_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_container"
-        tools:ignore="NotSibling" />
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/profile_edit_progressBar"
-        android:layout_width="600dp"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:indicatorColor="@color/purple_500"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_background"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/profile_edit_back_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back"
+        tools:ignore="ContentDescription" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_edit_profilePhoto_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/profile_photo"
+        app:civ_border_color="@color/imageView_round_color"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/profile_edit_information_cardView"
+        app:layout_constraintStart_toStartOf="@+id/profile_edit_information_cardView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/profile_edit_username_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/profile_photo_text"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/profile_edit_profilePhoto_imageView"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/profile_edit_profilePhoto_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_profilePhoto_imageView" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/profile_edit_information_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="20dp"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_edit_divider">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/profile_edit_information_linearLayout"
@@ -120,35 +77,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_edit_profilePhoto_imageView"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/imageView_round_color"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/profile_photo"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/profile_edit_username_editTextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
                 android:hint="@string/username_text"
-                app:counterEnabled="true"
-                app:counterMaxLength="50"
-                app:startIconDrawable="@drawable/ic_person"
-                app:startIconTint="@color/purple_500"
-                app:endIconMode="clear_text"
+                android:importantForAutofill="no"
                 app:boxBackgroundColor="@color/edittext_color2"
                 app:boxStrokeColor="@color/purple_500"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:endIconMode="clear_text"
                 app:hintTextColor="@color/purple_500"
-                android:importantForAutofill="no">
+                app:startIconDrawable="@drawable/ic_person"
+                app:startIconTint="@color/purple_500">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/profile_edit_username_editText"
@@ -163,24 +109,24 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/profile_edit_email_editTextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
                 android:layout_marginBottom="30dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="50"
                 android:hint="@string/email_text"
-                app:startIconDrawable="@drawable/ic_email"
-                app:startIconTint="@color/purple_500"
-                app:endIconMode="clear_text"
+                android:importantForAutofill="no"
                 app:boxBackgroundColor="@color/edittext_color2"
                 app:boxStrokeColor="@color/purple_500"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:endIconMode="clear_text"
                 app:hintTextColor="@color/purple_500"
-                android:importantForAutofill="no">
+                app:startIconDrawable="@drawable/ic_email"
+                app:startIconTint="@color/purple_500">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/profile_edit_email_editText"

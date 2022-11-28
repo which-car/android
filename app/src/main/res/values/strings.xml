@@ -24,4 +24,12 @@
     <string name="edit_text">Düzenle</string>
     <string name="profile_edit_text">Profil Düzenle</string>
     <string name="save_text">Kaydet</string>
+    <string name="settings_text">Ayarlar</string>
+    <string name="saved_text">Kaydedilenler</string>
+    <string name="favorite_text">Favoriler</string>
+    <string name="profile_password_text">Şifre:</string>
+    <string name="theme_text">Tema</string>
+    <string name="profile_photo_text">Profil Fotoğrafı</string>
+    <string name="home_title_description_text">Araç Önerisi, Araç Teknik Özellikleri ve Yorum</string>
+    <string name="about_text">Hakkında</string>
 </resources>

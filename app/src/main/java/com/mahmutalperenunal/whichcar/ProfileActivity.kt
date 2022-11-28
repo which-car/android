@@ -56,12 +56,12 @@ class ProfileActivity : AppCompatActivity() {
 
 
         //set username
-        binding.profileUserNameTextView.text = username
+        binding.profileUsernameTextView.text = username
 
 
-        checkTheme()
+        //checkTheme()
 
-        changeTheme()
+        //changeTheme()
 
         //checkConnection()
 
@@ -112,17 +112,17 @@ class ProfileActivity : AppCompatActivity() {
 
 
     //check theme and select current theme button
-    private fun checkTheme() {
+    /*private fun checkTheme() {
         when(theme) {
             -1 -> binding.profileThemeButtonToggleGroup.check(R.id.profile_theme_systemDefault_button)
             2 -> binding.profileThemeButtonToggleGroup.check(R.id.profile_theme_dark_button)
             1 -> binding.profileThemeButtonToggleGroup.check(R.id.profile_theme_light_button)
         }
-    }
+    }*/
 
 
     //set app theme
-    private fun changeTheme() {
+    /*private fun changeTheme() {
         binding.profileThemeButtonToggleGroup.addOnButtonCheckedListener { _, selectedBtnId, isChecked ->
             if (isChecked) {
                 val theme = when (selectedBtnId) {
@@ -136,7 +136,7 @@ class ProfileActivity : AppCompatActivity() {
                 editorTheme.apply()
             }
         }
-    }
+    }*/
 
 
     /*private fun getUserInformation() {
