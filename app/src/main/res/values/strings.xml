@@ -16,4 +16,12 @@
     <string name="car_suggestion_description_text">Kriterlere verilen yanıtlara göre araç önerisinde bulunan sistem.</string>
     <string name="car_detail_text">Araç Detay</string>
     <string name="car_detail_description_text">Seçilen aracın teknik verilerini gösteren ve yorum yapılabilinen sistem.</string>
+    <string name="system_default_text">Sistem Teması</string>
+    <string name="dark_text">Koyu</string>
+    <string name="light_text">Açık</string>
+    <string name="logout_text">Çıkış Yap</string>
+    <string name="profile_text">Profil</string>
+    <string name="edit_text">Düzenle</string>
+    <string name="profile_edit_text">Profil Düzenle</string>
+    <string name="save_text">Kaydet</string>
 </resources>

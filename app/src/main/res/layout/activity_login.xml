@@ -54,16 +54,27 @@
         app:tint="@color/blue2"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/android_logo_purple"
+        app:layout_constraintBottom_toTopOf="@+id/login_title_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/login_title_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/app_title_text"
         android:textAlignment="center"
-        android:textSize="32sp"
-        android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,8 +83,8 @@
         android:id="@+id/login_cardView"
         android:layout_width="match_parent"
         android:layout_height="255dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="230dp"
         android:layout_marginEnd="20dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
@@ -83,7 +94,7 @@
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/login_title_textView">
 
         <TextView
             android:id="@+id/login_welcome_textView"
@@ -91,61 +102,64 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/comfortaa"
             android:text="@string/welcome_text"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/login_username_editTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="70dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
             android:hint="@string/username_text"
-            app:startIconDrawable="@drawable/ic_person"
-            app:startIconTint="@color/blue3"
-            app:endIconMode="clear_text"
+            android:importantForAutofill="no"
             app:boxBackgroundColor="@color/edittext_color"
             app:boxStrokeColor="@color/blue3"
+            app:endIconMode="clear_text"
             app:hintTextColor="@color/blue3"
-            android:importantForAutofill="no">
+            app:startIconDrawable="@drawable/ic_person"
+            app:startIconTint="@color/blue3">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_username_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorPrimary"
+                android:fontFamily="@font/comfortaa"
                 android:inputType="textPersonName"
+                android:textColor="?android:attr/textColorPrimary"
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/login_password_editTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginEnd="30dp"
             android:hint="@string/password_text"
-            app:startIconDrawable="@drawable/ic_key"
-            app:startIconTint="@color/blue3"
-            app:endIconMode="password_toggle"
+            android:importantForAutofill="no"
             app:boxBackgroundColor="@color/edittext_color"
             app:boxStrokeColor="@color/blue3"
+            app:endIconMode="password_toggle"
             app:hintTextColor="@color/blue3"
-            android:layout_marginTop="140dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:importantForAutofill="no">
+            app:startIconDrawable="@drawable/ic_key"
+            app:startIconTint="@color/blue3">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorPrimary"
+                android:fontFamily="@font/comfortaa"
                 android:inputType="textPassword"
+                android:textColor="?android:attr/textColorPrimary"
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -154,10 +168,11 @@
             android:id="@+id/login_forgotPassword_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="15dp"
+            android:background="?attr/selectableItemBackground"
+            android:fontFamily="@font/comfortaa"
             android:text="@string/forgot_password_text"
             android:textSize="14sp" />
 
@@ -169,6 +184,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/blue3"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/login_text"
         android:textAllCaps="false"
         android:textColor="?android:attr/textColorPrimary"
@@ -186,6 +202,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/edittext_color2"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/register_text"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_red_dark"
@@ -203,9 +220,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="85dp"
         android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/continue_as_a_guest_text"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

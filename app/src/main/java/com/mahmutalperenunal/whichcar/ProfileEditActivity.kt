@@ -21,25 +21,27 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
-import com.mahmutalperenunal.whichcar.databinding.ActivityRegisterBinding
+import com.mahmutalperenunal.whichcar.databinding.ActivityProfileEditBinding
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegisterActivity : AppCompatActivity() {
+class ProfileEditActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var binding: ActivityProfileEditBinding
 
-    private var username: String = ""
-    private var password1: String = ""
-    private var password2: String = ""
-    private var email: String = ""
+    private var username: String? = null
+    private var email: String? = null
+    private var userId: Int? = null
+    private var userToken: String? = null
 
-    private var passwordControl: Boolean = false
+    private lateinit var sharedPreferencesUsernamePassword: SharedPreferences
+    private lateinit var sharedPreferencesUserId: SharedPreferences
+    private lateinit var sharedPreferencesAuthToken: SharedPreferences
+
+    private lateinit var editorUsername: SharedPreferences.Editor
+
     private var emailControl: Boolean = false
 
     private var clicked: Boolean = false
@@ -58,25 +60,34 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityProfileEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //set sharedPreferences
+        sharedPreferencesUsernamePassword = getSharedPreferences("autoUsernamePassword", MODE_PRIVATE)
+        sharedPreferencesUserId = getSharedPreferences("userId", MODE_PRIVATE)
+        sharedPreferencesAuthToken = getSharedPreferences("authToken", MODE_PRIVATE)
+
+        editorUsername = sharedPreferencesUsernamePassword.edit()
+
 
         //checkConnection()
 
         checkPermissions()
 
+        getAndSetData()
+
         validEmail()
-        validPassword()
 
 
         //profile photo
-        binding.registerProfilePhotoImageView.setOnClickListener { setProfilePhoto() }
+        binding.profileEditProfilePhotoImageView.setOnClickListener { setProfilePhoto() }
 
         //register
-        binding.registerRegisterButton.setOnClickListener { registerProcess() }
+        binding.profileEditSaveButton.setOnClickListener { editProcess() }
 
-        //back to loginActivity
-        binding.registerBackButton.setOnClickListener { onBackPressed() }
+        //back to profileActivity
+        binding.profileEditBackButton.setOnClickListener { onBackPressed() }
     }
 
 
@@ -103,54 +114,33 @@ class RegisterActivity : AppCompatActivity() {
     }*/
 
 
-    //get entered data
-    private fun getData() {
-        username = binding.registerUsernameEditText.text.toString().trim()
-        password1 = binding.registerPasswordEditText.text.toString().trim()
-        password2 = binding.registerPassword2EditText.text.toString().trim()
-        email = binding.registerEmailEditText.text.toString().trim()
-    }
+    //get and set user data
+    private fun getAndSetData() {
 
+        //get
+        username = intent.getStringExtra("username")
+        email = intent.getStringExtra("email")
 
-    //valid password
-    private fun validPassword(){
-        binding.registerPassword2EditText.addTextChangedListener(object :
-            TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        //set
+        binding.profileEditUsernameEditText.setText(username)
+        binding.profileEditEmailEditText.setText(email)
 
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.registerPasswordEditText.text.toString() != binding.registerPassword2EditText.text.toString()) {
-                    binding.registerPasswordEditTextLayout.helperText = "Şifreler Eşleşmiyor!"
-                    passwordControl = false
-                } else {
-                    binding.registerPassword2EditTextLayout.helperText = ""
-                    passwordControl = true
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-        })
     }
 
 
     //valid email
     private fun validEmail(){
-        binding.registerEmailEditText.addTextChangedListener(object : TextWatcher{
+        binding.profileEditEmailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (!Patterns.EMAIL_ADDRESS.matcher(binding.registerEmailEditText.text.toString()).matches()) {
-                    binding.registerEmailEditTextLayout.helperText = "Geçersiz Mail Adresi!"
+                if (!Patterns.EMAIL_ADDRESS.matcher(binding.profileEditEmailEditText.text.toString()).matches()) {
+                    binding.profileEditEmailEditTextLayout.helperText = "Geçersiz Mail Adresi!"
                     emailControl = false
                 } else {
-                    binding.registerEmailEditTextLayout.helperText = ""
+                    binding.profileEditEmailEditTextLayout.helperText = ""
                     emailControl = true
                 }
             }
@@ -287,7 +277,7 @@ class RegisterActivity : AppCompatActivity() {
 
                     getImageUriFromBitmap(applicationContext, bitmap)
 
-                    binding.registerProfilePhotoImageView.setImageBitmap(bitmap)
+                    binding.profileEditProfilePhotoImageView.setImageBitmap(bitmap)
 
                 }
 
@@ -295,7 +285,7 @@ class RegisterActivity : AppCompatActivity() {
 
                     imageUri = data?.data!!
 
-                    binding.registerProfilePhotoImageView.setImageURI(imageUri)
+                    binding.profileEditProfilePhotoImageView.setImageURI(imageUri)
 
                 }
             }
@@ -303,90 +293,75 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    //register process
-    private fun registerProcess() {
+    //save process
+    private fun editProcess() {
 
         val imageName = getFileName(imageUri, applicationContext)
 
         //check edittext
-        if (binding.registerUsernameEditText.text!!.isEmpty()) {
+        if (binding.profileEditUsernameEditText.text!!.isEmpty()) {
 
-            binding.registerUsernameEditText.error = "Zorunlu"
+            binding.profileEditUsernameEditText.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
 
-        } else if (binding.registerPasswordEditText.text!!.isEmpty() || !passwordControl) {
+        } else if (binding.profileEditEmailEditText.text!!.isEmpty() || !emailControl) {
 
-            binding.registerPasswordEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
-
-        } else if (binding.registerPassword2EditText.text!!.isEmpty() || !passwordControl) {
-
-            binding.registerPassword2EditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
-
-        } else if (binding.registerEmailEditText.text!!.isEmpty() || !emailControl) {
-
-            binding.registerEmailEditText.error = "Zorunlu"
+            binding.profileEditEmailEditText.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
 
         } else {
 
-            getData()
+            //val retrofit = RetrofitInstance.apiGallery
 
-            //check passwords
-            if (password1 != password2) {
-                binding.registerPasswordEditText.error = "Hatalı"
-                binding.registerPassword2EditText.error = "Hatalı"
-                Toast.makeText(applicationContext, "Girilen şifreler uyuşmamaktadır! Lütfen tekrar deneyin.", Toast.LENGTH_SHORT).show()
-            } else {
+            val path: File = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES
+            )
 
-                //val retrofit = RetrofitInstance.apiGallery
+            val file = File(path, imageName)
 
-                val path: File = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES
-                )
+            try {
+                path.mkdirs()
+            } catch (e: Exception) {
+                Log.e("Path Error", e.toString())
+            }
 
-                val file = File(path, imageName)
+            //val requestFile: RequestBody = RequestBody.create("image/*".toMediaType(), file)
+            //val image: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-                try {
-                    path.mkdirs()
-                } catch (e: Exception) {
-                    Log.e("Path Error", e.toString())
+            //val username: RequestBody = RequestBody.create("text/plain".toMediaType(), username)
+            //val password: RequestBody = RequestBody.create("text/plain".toMediaType(), password1)
+            //val password2: RequestBody = RequestBody.create("text/plain".toMediaType(), password2)
+            //val email: RequestBody = RequestBody.create("text/plain".toMediaType(), email)
+
+            //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", image, title, description, classroom, user)
+            /*call.enqueue(object : Callback<Images> {
+                override fun onResponse(call: Call<Images>, response: Response<Images>) {
+                    Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
+
+                    editorUsername.putString("username", binding.profileEditUsername.editText.text.toString().trim())
+
+                    val intentHome = Intent(applicationContext, HomeActivity::class.java)
+                    startActivity(intentHome)
+                    finish()
+                    //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                 }
 
-                //val requestFile: RequestBody = RequestBody.create("image/*".toMediaType(), file)
-                //val image: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestFile)
-
-                //val username: RequestBody = RequestBody.create("text/plain".toMediaType(), username)
-                //val password: RequestBody = RequestBody.create("text/plain".toMediaType(), password1)
-                //val password2: RequestBody = RequestBody.create("text/plain".toMediaType(), password2)
-                //val email: RequestBody = RequestBody.create("text/plain".toMediaType(), email)
-
-                //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", image, title, description, classroom, user)
-                /*call.enqueue(object : Callback<Images> {
-                    override fun onResponse(call: Call<Images>, response: Response<Images>) {
-                        Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
-                        onBackPressed()
-                    }
-
-                    override fun onFailure(call: Call<Images>, t: Throwable) {
-                        Log.e("Gallery Add Error", t.printStackTrace().toString())
-                        Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
-                    }
-                })*/
-
-            }
+                override fun onFailure(call: Call<Images>, t: Throwable) {
+                    Log.e("Gallery Add Error", t.printStackTrace().toString())
+                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                }
+            })*/
 
         }
 
     }
 
 
-    //back to loginActivity
+    //back to profileActivity
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val intentLogin = Intent(applicationContext, LoginActivity::class.java)
-        startActivity(intentLogin)
+        val intentProfile = Intent(applicationContext, ProfileActivity::class.java)
+        startActivity(intentProfile)
         finish()
         //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }

@@ -19,8 +19,12 @@
     <color name="blue2">#014A7F</color>
     <color name="blue3">#05BFEE</color>
 
+    <color name="red">#C21500</color>
+
     <color name="edittext_color">#202124</color>
     <color name="edittext_color2">#202124</color>
+
+    <color name="divider_color">#5E5E5E</color>
 
     <color name="imageView_round_color">#FAFAFA</color>
 

@@ -126,9 +126,10 @@
                         android:id="@+id/register_username_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/comfortaa"
+                        android:inputType="textPersonName"
                         android:maxLength="50"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:inputType="textPersonName"
                         tools:ignore="TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -156,8 +157,9 @@
                         android:id="@+id/register_password_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="?android:attr/textColorPrimary"
+                        android:fontFamily="@font/comfortaa"
                         android:inputType="textPassword"
+                        android:textColor="?android:attr/textColorPrimary"
                         tools:ignore="TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -185,8 +187,9 @@
                         android:id="@+id/register_password2_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="?android:attr/textColorPrimary"
+                        android:fontFamily="@font/comfortaa"
                         android:inputType="textPassword"
+                        android:textColor="?android:attr/textColorPrimary"
                         tools:ignore="TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -215,9 +218,10 @@
                         android:id="@+id/register_email_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/comfortaa"
+                        android:inputType="textEmailAddress"
                         android:maxLength="50"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:inputType="textEmailAddress"
                         tools:ignore="TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -234,6 +238,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/orange3"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/register_text"
         android:textAllCaps="false"
         android:textColor="?android:attr/textColorPrimary"

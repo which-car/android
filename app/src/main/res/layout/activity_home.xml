@@ -48,9 +48,10 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/comfortaa"
                         android:text="@string/app_name"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -105,9 +106,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/comfortaa"
                         android:text="@string/car_suggestion_text"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         tools:ignore="RelativeOverlap,TextContrastCheck" />
 
@@ -118,9 +120,10 @@
                         android:layout_marginStart="25dp"
                         android:layout_marginTop="35dp"
                         android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/comfortaa"
                         android:text="@string/car_suggestion_description_text"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="RelativeOverlap,TextContrastCheck" />
 
                     <ImageView
@@ -171,9 +174,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/comfortaa"
                         android:text="@string/car_detail_text"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         tools:ignore="RelativeOverlap,TextContrastCheck" />
 
@@ -184,9 +188,10 @@
                         android:layout_marginStart="25dp"
                         android:layout_marginTop="35dp"
                         android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/comfortaa"
                         android:text="@string/car_detail_description_text"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="RelativeOverlap,TextContrastCheck" />
 
                     <ImageView

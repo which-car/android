@@ -88,6 +88,11 @@ class LoginActivity : AppCompatActivity() {
                     editorUsername.putString("password", binding.loginPasswordEditText.text.toString().trim())
                     editorUsername.apply()
 
+                    val intent = Intent(applicationContext, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    intent.putExtra("user type", "Login")
+                    startActivity(intent)
+                    finish()
+
                     //loginProcess()
                 }
             }
@@ -103,7 +108,8 @@ class LoginActivity : AppCompatActivity() {
             editorUsername.putString("password", "")
             editorUsername.apply()
 
-            val intent = Intent(applicationContext, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            val intent = Intent(applicationContext, HomeActivity::class.java)
+            intent.putExtra("user type", "Guest")
             startActivity(intent)
             finish()
             //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

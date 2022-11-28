@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="clickableView">
+        <item name="colorControlHighlight">@android:color/darker_gray</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+    </style>
+    
+    <style name="roundImageView">
+        <item name="cornerSize">20%</item>
+    </style>
+
+    <style name="button_overlay" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="colorSurface">@color/gray</item>
+    </style>
+
+    <style name="SelectorTheme" parent="@style/Theme.MaterialComponents"/>
+
+</resources>
