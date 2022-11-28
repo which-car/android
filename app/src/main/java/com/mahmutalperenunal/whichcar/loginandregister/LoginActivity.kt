@@ -1,4 +1,4 @@
-package com.mahmutalperenunal.whichcar
+package com.mahmutalperenunal.whichcar.loginandregister
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -6,12 +6,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
-import androidx.core.view.isEmpty
-import androidx.lifecycle.ViewModelProvider
+import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityLoginBinding
+import com.mahmutalperenunal.whichcar.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 

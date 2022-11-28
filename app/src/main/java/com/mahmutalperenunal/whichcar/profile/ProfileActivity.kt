@@ -1,4 +1,4 @@
-package com.mahmutalperenunal.whichcar
+package com.mahmutalperenunal.whichcar.profile
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -6,12 +6,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModelProvider
+import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityProfileBinding
+import com.mahmutalperenunal.whichcar.home.HomeActivity
 
 class ProfileActivity : AppCompatActivity() {
 

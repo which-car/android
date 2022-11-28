@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
-    tools:context=".RegisterActivity">
+    tools:context=".loginandregister.RegisterActivity">
 
     <ImageView
         android:id="@+id/register_circle_1"

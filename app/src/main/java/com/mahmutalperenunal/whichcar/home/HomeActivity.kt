@@ -1,12 +1,13 @@
-package com.mahmutalperenunal.whichcar
+package com.mahmutalperenunal.whichcar.home
 
 import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.mahmutalperenunal.whichcar.profile.ProfileActivity
+import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -32,6 +33,9 @@ class HomeActivity : AppCompatActivity() {
 
         //go to profileActivity
         binding.homeProfileButton.setOnClickListener { openProfile() }
+
+        //open about alertDialog
+        binding.homeAboutButton.setOnClickListener {  }
     }
 
 
@@ -60,6 +64,21 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
+    }
+
+
+    //about the app
+    private fun about() {
+        AlertDialog.Builder(this, R.style.CustomAlertDialog)
+            .setTitle("Hakkında")
+            .setMessage("Bu uygulama ile araç önerisi alabilir, teknik detaylarını görüntüleyebilir ve yorumda bulunabilirsiniz.")
+            .setIcon(R.drawable.question)
+            .setPositiveButton("Tamam") {
+                    dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
 

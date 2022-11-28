@@ -1,14 +1,11 @@
 package com.mahmutalperenunal.whichcar
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModelProvider
 import com.mahmutalperenunal.whichcar.databinding.ActivityMainBinding
+import com.mahmutalperenunal.whichcar.loginandregister.LoginActivity
 import java.util.*
 import kotlin.concurrent.timerTask
 

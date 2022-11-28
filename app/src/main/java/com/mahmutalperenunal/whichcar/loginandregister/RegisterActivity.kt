@@ -1,11 +1,10 @@
-package com.mahmutalperenunal.whichcar
+package com.mahmutalperenunal.whichcar.loginandregister
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
@@ -21,9 +20,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
+import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityRegisterBinding
 import java.io.ByteArrayOutputStream
 import java.io.File

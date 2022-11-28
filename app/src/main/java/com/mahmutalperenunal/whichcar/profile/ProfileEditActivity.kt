@@ -1,4 +1,4 @@
-package com.mahmutalperenunal.whichcar
+package com.mahmutalperenunal.whichcar.profile
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -21,6 +21,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityProfileEditBinding
 import java.io.ByteArrayOutputStream
 import java.io.File
