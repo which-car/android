@@ -185,6 +185,34 @@
             android:background="#585858"
             tools:ignore="ImageContrastCheck" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/profile_registered_date_text"
+                android:textColor="#5917e1"
+                android:textSize="18sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:text="1 Aralık 2022"
+                android:textAlignment="viewEnd"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button

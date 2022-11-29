@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
 
             AlertDialog.Builder(this, R.style.CustomAlertDialog)
                 .setTitle("Şifreni mi unuttun?")
-                .setMessage("Şifrenizi öğrenmek için lütfen kreşiniz ile iletişime geçiniz.")
+                .setMessage("Şifrenizi öğrenmek için lütfen iletişime geçiniz.")
                 .setIcon(R.drawable.question)
                 .setNegativeButton("Tamam") {
                         dialog, _ ->

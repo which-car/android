@@ -32,4 +32,6 @@
     <string name="profile_photo_text">Profil Fotoğrafı</string>
     <string name="home_title_description_text">Araç Önerisi, Araç Teknik Özellikleri ve Yorum</string>
     <string name="about_text">Hakkında</string>
+    <string name="profile_registered_date_text">Kayıt Olunan Tarih:</string>
+    <string name="car_detail_cars_text">Lütfen Marka Seçin!</string>
 </resources>
