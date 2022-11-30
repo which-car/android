@@ -2,10 +2,12 @@ package com.mahmutalperenunal.whichcar.profile
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityProfileBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
@@ -18,7 +20,9 @@ class ProfileActivity : AppCompatActivity() {
     private var email: String? = null
     private var userId: Int? = null
     private var userToken: String? = null
-    private var theme: Int? = null
+
+    private var themeCode: Int = 0
+    private var themeName: String = ""
 
     private lateinit var sharedPreferencesAutoLogin: SharedPreferences
     private lateinit var sharedPreferencesUsernamePassword: SharedPreferences
@@ -49,14 +53,14 @@ class ProfileActivity : AppCompatActivity() {
         username = sharedPreferencesUsernamePassword.getString("username", null)
         userId = sharedPreferencesUserId.getInt("id", 0)
         userToken = sharedPreferencesAuthToken.getString("token", null)
-        theme = sharedPreferencesTheme.getInt("theme", 0)
 
 
         //set username
         binding.profileUsernameTextView.text = username
 
 
-        //checkTheme()
+        //check last theme
+        checkLastTheme()
 
         //changeTheme()
 
@@ -80,8 +84,70 @@ class ProfileActivity : AppCompatActivity() {
             //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
+        //go to favouritesActivity
+        binding.profileFavouritesButton.setOnClickListener {
+            val intentFavoritesActivity = Intent(applicationContext, FavoritesActivity::class.java)
+            startActivity(intentFavoritesActivity)
+            finish()
+            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        //change theme
+        binding.profileThemeButton.setOnClickListener { setTheme() }
+
         //back to homeActivity
         binding.profileBackButton.setOnClickListener { onBackPressed() }
+    }
+
+
+    //set app theme
+    private fun setTheme() {
+
+        androidx.appcompat.app.AlertDialog.Builder(this, R.style.CustomAlertDialog)
+            .setTitle("Uygulama Teması")
+            .setMessage("Uygulama temasını seçiniz.\n\nMevcut tema: $themeName")
+            .setIcon(R.drawable.day_night)
+            .setPositiveButton(
+                "Açık"
+            ) { _: DialogInterface?, _: Int ->
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
+                editorTheme.putInt("theme", 1)
+                editorTheme.apply()
+            }
+            .setNegativeButton(
+                "Koyu"
+            ) { _: DialogInterface?, _: Int ->
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
+                editorTheme.putInt("theme", 2)
+                editorTheme.apply()
+            }
+            .setNeutralButton(
+                "Sistem Teması"
+            ) { _: DialogInterface?, _: Int ->
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                )
+                editorTheme.putInt("theme", -1)
+                editorTheme.apply()
+            }
+            .show()
+
+    }
+
+
+    //check last theme
+    private fun checkLastTheme() {
+        themeCode = sharedPreferencesTheme.getInt("theme", 0)
+
+        when (themeCode) {
+            -1 -> themeName = "Sistem Teması"
+            1 -> themeName = "Açık"
+            2 -> themeName = "Koyu"
+        }
     }
 
 

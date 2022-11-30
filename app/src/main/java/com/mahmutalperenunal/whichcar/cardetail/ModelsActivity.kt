@@ -12,6 +12,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahmutalperenunal.whichcar.databinding.ActivityModelsBinding
+import com.mahmutalperenunal.whichcar.home.HomeActivity
 import java.io.File
 
 class ModelsActivity : AppCompatActivity() {
@@ -36,6 +37,9 @@ class ModelsActivity : AppCompatActivity() {
 
         //postBrandData()
         //onClickProcess()
+
+        //back to brandActivity
+        binding.modelsBackButton.setOnClickListener { onBackPressed() }
     }
 
 
@@ -132,13 +136,13 @@ class ModelsActivity : AppCompatActivity() {
     }*/
 
 
-    //go to detalActivity
+    //go to detailActivity
     /*private fun onClickProcess() {
         galleryAdapter.setOnItemClickListener(object : GalleryAdapter.OnItemClickListener {
             @SuppressLint("SetTextI18n")
             override fun onItemClick(position: Int) {
 
-                val intent = Intent(applicationContext, GalleryEditActivity::class.java)
+                val intent = Intent(applicationContext, DetailActivity::class.java)
                 intent.putExtra("Brand", brand)
                 intent.putExtra("Model", models[position])
                 startActivity(intent)
@@ -148,4 +152,14 @@ class ModelsActivity : AppCompatActivity() {
             }
         })
     }*/
+
+
+    //back to brandsActivity
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val intent = Intent(applicationContext, BrandsActivity::class.java)
+        startActivity(intent)
+        finish()
+        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
 }
