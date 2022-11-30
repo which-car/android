@@ -39,4 +39,15 @@
     <string name="model_text">Model</string>
     <string name="no_model_text">Model Bulunamadı!</string>
     <string name="favourites_text">Favoriler</string>
+    <string name="acceleration_text">0–100 km/sa hızlanma (sn):</string>
+    <string name="baggage_size_text">Bagaj hacmi (lt):</string>
+    <string name="chassis_type_text">Araç tipi:</string>
+    <string name="emission_results_text">Emisyon değeri (gr/km):</string>
+    <string name="engine_text">"Motor: "</string>
+    <string name="fuel_efficiency_text">Ortalama yakıt tüketimi (lt/100 km):</string>
+    <string name="gearbox_text">"Vites: "</string>
+    <string name="ncap_result_text">"Euro Ncap Sonucu: "</string>
+    <string name="price_text">"Fiyat (₺): "</string>
+    <string name="segment_text">"Segment: "</string>
+    <string name="like_text">100</string>
 </resources>

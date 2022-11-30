@@ -51,7 +51,7 @@ class BrandsActivity : AppCompatActivity() {
     private fun goToModelActivity() {
 
         binding.carsButton1.setOnClickListener {
-            val intentModels = Intent(applicationContext, ModelsActivity::class.java)
+            val intentModels = Intent(applicationContext, DetailActivity::class.java)
             intentModels.putExtra("Brand", "Audi")
             startActivity(intentModels)
             finish()
