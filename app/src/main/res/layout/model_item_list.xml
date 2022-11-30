@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/models_items_list"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:id="@+id/models_items_list_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center_vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/models_items_list_modelPhoto_imageView"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/car"
+            app:shapeAppearanceOverlay="@style/roundImageView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/models_items_list_brand_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_toEndOf="@+id/models_items_list_modelPhoto_imageView"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/brand_text"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/models_items_list_model_textView"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/models_items_list_brand_textView"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/models_items_list_modelPhoto_imageView"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/model_text"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -29,16 +29,17 @@
         app:srcCompat="@drawable/back"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_profilePhoto_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/account"
         android:layout_marginTop="52dp"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/account"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/profile_username_textView"

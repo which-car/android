@@ -34,4 +34,8 @@
     <string name="about_text">Hakkında</string>
     <string name="profile_registered_date_text">Kayıt Olunan Tarih:</string>
     <string name="car_detail_cars_text">Lütfen Marka Seçin!</string>
+    <string name="car_detail_models_text">Lütfen Model Seçin!</string>
+    <string name="brand_text">Marka</string>
+    <string name="model_text">Model</string>
+    <string name="no_model_text">Model Bulunamadı!</string>
 </resources>

@@ -9,7 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.mahmutalperenunal.whichcar.profile.ProfileActivity
 import com.mahmutalperenunal.whichcar.R
-import com.mahmutalperenunal.whichcar.cardetail.CarsActivity
+import com.mahmutalperenunal.whichcar.cardetail.BrandsActivity
 import com.mahmutalperenunal.whichcar.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -43,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
 
         //go to carsActivity
         binding.homeCarDetailButton.setOnClickListener {
-            val intentCars = Intent(applicationContext, CarsActivity::class.java)
+            val intentCars = Intent(applicationContext, BrandsActivity::class.java)
             startActivity(intentCars)
             finish()
             //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

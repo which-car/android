@@ -15,7 +15,14 @@
         android:theme="@style/Theme.WhichCar"
         tools:targetApi="31">
         <activity
-            android:name=".cardetail.CarsActivity"
+            android:name=".cardetail.ModelsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".cardetail.BrandsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
