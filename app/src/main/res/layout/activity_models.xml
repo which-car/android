@@ -54,12 +54,12 @@
         app:layout_constraintTop_toBottomOf="@+id/models_splash_imageView">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/module_gallery_main_swipeRefreshLayout"
+            android:id="@+id/models_swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/module_gallery_main_list_recyclerView"
+                android:id="@+id/models_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/model_item_list" />

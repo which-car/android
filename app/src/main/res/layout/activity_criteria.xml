@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    tools:context=".carsuggestion.CriteriaActivity">
+
+    <LinearLayout
+        android:id="@+id/criteria_title_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="30dp"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        android:gravity="left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            android:id="@+id/criteria_title_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/car_suggestion_text"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/criteria_title_description_textView"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/criteria_description_text"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="280dp"
+        android:layout_marginBottom="60dp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/criteria_splash_imageView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_baggageSize_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bagaj Hacmi (0-10)"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_baggageSize_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_fuelEfficiency_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Yakıt Verimliliği (0-10)"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_fuelEfficiency_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_performance_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Performans (0-10)"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_performance_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_safety_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Güvenlik (0-10)"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_safety_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_gearbox_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Vites"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_gearbox_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_chassisType_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Araç Tipi"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_chassisType_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/criteria_wheelDrive_editTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Çekiş Tipi"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="dropdown_menu"
+                app:boxStrokeColor="@color/blue3"
+                app:boxBackgroundColor="@color/edittext_color2"
+                app:hintTextColor="@color/blue3"
+                android:importantForAutofill="no">
+
+                <AutoCompleteTextView
+                    android:id="@+id/criteria_wheelDrive_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:inputType="none"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/criteria_minPrice_editTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Fiyat (min)"
+                    android:importantForAutofill="no"
+                    app:boxBackgroundColor="@color/edittext_color2"
+                    app:boxStrokeColor="@color/blue3"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/blue3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/criteria_minPrice_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/comfortaa"
+                        android:inputType="textPersonName"
+                        android:maxLength="10"
+                        android:textColor="?android:attr/textColorPrimary"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/criteria_maxPrice_editTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:hint="Fiyat (max)"
+                    android:importantForAutofill="no"
+                    app:boxBackgroundColor="@color/edittext_color2"
+                    app:boxStrokeColor="@color/blue3"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/blue3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/criteria_maxPrice_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/comfortaa"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="10"
+                        android:textColor="?android:attr/textColorPrimary"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/criteria_suggest_button"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/blue3"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/suggest_text"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="25dp"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/criteria_splash_imageView"
+        android:layout_width="580dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_marginTop="-550dp"
+        android:src="@drawable/home_background"
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/criteria_back_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

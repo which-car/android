@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import com.mahmutalperenunal.whichcar.profile.ProfileActivity
 import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.cardetail.BrandsActivity
+import com.mahmutalperenunal.whichcar.carsuggestion.CriteriaActivity
 import com.mahmutalperenunal.whichcar.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -40,6 +41,14 @@ class HomeActivity : AppCompatActivity() {
         binding.homeTitleLinearLayout.startAnimation(animationFromBottom)
         binding.homeMenuLinearLayout.startAnimation(animationFromBottom)
 
+
+        //go to criteriaActivity
+        binding.homeCarSuggestionButton.setOnClickListener {
+            val intentCars = Intent(applicationContext, CriteriaActivity::class.java)
+            startActivity(intentCars)
+            finish()
+            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
 
         //go to carsActivity
         binding.homeCarDetailButton.setOnClickListener {

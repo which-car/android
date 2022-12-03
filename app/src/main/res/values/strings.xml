@@ -50,4 +50,7 @@
     <string name="price_text">"Fiyat (₺): "</string>
     <string name="segment_text">"Segment: "</string>
     <string name="like_text">100</string>
+    <string name="suggestion_description_text">Sizin için önerdiğimiz araçlar:</string>
+    <string name="criteria_description_text">Lütfen tüm kriterleri doldurun.</string>
+    <string name="suggest_text">Öner</string>
 </resources>

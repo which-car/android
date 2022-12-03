@@ -41,7 +41,7 @@
             android:layout_toEndOf="@+id/models_items_list_modelPhoto_imageView"
             android:fontFamily="@font/comfortaa"
             android:text="@string/brand_text"
-            android:textColor="@color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="RelativeOverlap" />

@@ -71,8 +71,6 @@ class ModelsActivity : AppCompatActivity() {
 
         //val retrofit = RetrofitInstance.apiGallery
 
-        //val brand: RequestBody = RequestBody.create("text/plain".toMediaType(), brand)
-
         //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", brand)
         /*call.enqueue(object : Callback<Images> {
             override fun onResponse(call: Call<Images>, response: Response<Images>) {
