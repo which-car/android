@@ -22,7 +22,17 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityProfileEditBinding
+import com.mahmutalperenunal.whichcar.home.HomeActivity
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import com.mahmutalperenunal.whichcar.model.User
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -71,8 +81,12 @@ class ProfileEditActivity : AppCompatActivity() {
 
         editorUsername = sharedPreferencesUsernamePassword.edit()
 
+        //get values
+        userId = sharedPreferencesUserId.getInt("id", 0)
+        userToken = sharedPreferencesAuthToken.getString("token", null)
 
-        //checkConnection()
+
+        checkConnection()
 
         checkPermissions()
 
@@ -93,10 +107,10 @@ class ProfileEditActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
-        val networkConnection = NetworkConnection(requireActivity().applicationContext)
-        networkConnection.observe(viewLifecycleOwner, androidx.lifecycle.Observer { isConnected ->
+        val networkConnection = NetworkConnection(applicationContext)
+        networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(applicationContext, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
@@ -112,7 +126,7 @@ class ProfileEditActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
     //get and set user data
@@ -312,7 +326,7 @@ class ProfileEditActivity : AppCompatActivity() {
 
         } else {
 
-            //val retrofit = RetrofitInstance.apiGallery
+            val retrofit = RetrofitInstance.apiUser
 
             val path: File = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES
@@ -326,32 +340,35 @@ class ProfileEditActivity : AppCompatActivity() {
                 Log.e("Path Error", e.toString())
             }
 
-            //val requestFile: RequestBody = RequestBody.create("image/*".toMediaType(), file)
-            //val image: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestFile)
+            val requestFile: RequestBody = RequestBody.create("image/*".toMediaType(), file)
+            val image: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-            //val username: RequestBody = RequestBody.create("text/plain".toMediaType(), username)
-            //val password: RequestBody = RequestBody.create("text/plain".toMediaType(), password1)
-            //val password2: RequestBody = RequestBody.create("text/plain".toMediaType(), password2)
-            //val email: RequestBody = RequestBody.create("text/plain".toMediaType(), email)
+            val username: RequestBody = RequestBody.create("text/plain".toMediaType(), binding.profileEditUsernameEditText.text.toString().trim())
+            val email: RequestBody = RequestBody.create("text/plain".toMediaType(), binding.profileEditEmailEditText.text.toString().trim())
 
-            //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", image, title, description, classroom, user)
-            /*call.enqueue(object : Callback<Images> {
-                override fun onResponse(call: Call<Images>, response: Response<Images>) {
-                    Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
+            val call: Call<User> = retrofit.putUser("Token $userToken", userId!!, image, username, email)
+            call.enqueue(object : Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
 
-                    editorUsername.putString("username", binding.profileEditUsername.editText.text.toString().trim())
+                    Toast.makeText(applicationContext, "Kullanıcı Bilgileri Güncellendi!", Toast.LENGTH_SHORT).show()
+
+                    editorUsername.putString("username", binding.profileEditUsernameEditText.text.toString().trim())
 
                     val intentHome = Intent(applicationContext, HomeActivity::class.java)
+                    intentHome.putExtra("Username", binding.profileEditUsernameEditText.text.toString().trim())
                     startActivity(intentHome)
                     finish()
-                    //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+
                 }
 
-                override fun onFailure(call: Call<Images>, t: Throwable) {
-                    Log.e("Gallery Add Error", t.printStackTrace().toString())
+                override fun onFailure(call: Call<User>, t: Throwable) {
+
+                    Log.e("Profile Put Error", t.printStackTrace().toString())
                     Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+
                 }
-            })*/
+            })
 
         }
 
@@ -364,6 +381,6 @@ class ProfileEditActivity : AppCompatActivity() {
         val intentProfile = Intent(applicationContext, ProfileActivity::class.java)
         startActivity(intentProfile)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

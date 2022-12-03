@@ -1,5 +1,6 @@
 package com.mahmutalperenunal.whichcar.carsuggestion
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,11 +24,17 @@ class CriteriaActivity : AppCompatActivity() {
     private var minPrice: String = ""
     private var maxPrice: String = ""
 
+    private lateinit var progressDialog: ProgressDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCriteriaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //animation to show until car suggested
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Öneriler Hazırlanıyor...")
 
         setSelectableData()
 
@@ -121,6 +128,8 @@ class CriteriaActivity : AppCompatActivity() {
     //post brand data
     /*private fun postBrandData() {
 
+        progressDialog.show()
+
         getEnteredData
 
         if (baggageSize.equals("")) {
@@ -176,6 +185,8 @@ class CriteriaActivity : AppCompatActivity() {
             /*call.enqueue(object : Callback<Images> {
                 override fun onResponse(call: Call<Images>, response: Response<Images>) {
 
+                    if (progressDialog.isShowing) progressDialog.dismiss()
+
                     Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(applicationContext, SuggestedCarsActivity::class.java)
@@ -186,6 +197,7 @@ class CriteriaActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<Images>, t: Throwable) {
+                    if (progressDialog.isShowing) progressDialog.dismiss()
                     Log.e("Gallery Add Error", t.printStackTrace().toString())
                     Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
                 }

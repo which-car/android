@@ -21,7 +21,17 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityRegisterBinding
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import com.mahmutalperenunal.whichcar.model.auth.AuthToken
+import com.mahmutalperenunal.whichcar.model.auth.Register
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -58,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //checkConnection()
+        checkConnection()
 
         checkPermissions()
 
@@ -78,10 +88,10 @@ class RegisterActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
-        val networkConnection = NetworkConnection(requireActivity().applicationContext)
-        networkConnection.observe(viewLifecycleOwner, androidx.lifecycle.Observer { isConnected ->
+        val networkConnection = NetworkConnection(applicationContext)
+        networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(applicationContext, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
@@ -97,7 +107,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
     //get entered data
@@ -337,7 +347,7 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Girilen şifreler uyuşmamaktadır! Lütfen tekrar deneyin.", Toast.LENGTH_SHORT).show()
             } else {
 
-                //val retrofit = RetrofitInstance.apiGallery
+                val retrofit = RetrofitInstance.apiRegister
 
                 val path: File = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_PICTURES
@@ -351,26 +361,29 @@ class RegisterActivity : AppCompatActivity() {
                     Log.e("Path Error", e.toString())
                 }
 
-                //val requestFile: RequestBody = RequestBody.create("image/*".toMediaType(), file)
-                //val image: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestFile)
+                val requestFile: RequestBody = RequestBody.create("image/*".toMediaType(), file)
+                val image: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-                //val username: RequestBody = RequestBody.create("text/plain".toMediaType(), username)
-                //val password: RequestBody = RequestBody.create("text/plain".toMediaType(), password1)
-                //val password2: RequestBody = RequestBody.create("text/plain".toMediaType(), password2)
-                //val email: RequestBody = RequestBody.create("text/plain".toMediaType(), email)
+                val username: RequestBody = RequestBody.create("text/plain".toMediaType(), username)
+                val password: RequestBody = RequestBody.create("text/plain".toMediaType(), password1)
+                val password2: RequestBody = RequestBody.create("text/plain".toMediaType(), password2)
+                val email: RequestBody = RequestBody.create("text/plain".toMediaType(), email)
 
-                //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", image, title, description, classroom, user)
-                /*call.enqueue(object : Callback<Images> {
-                    override fun onResponse(call: Call<Images>, response: Response<Images>) {
+                val postRegister = Register(username.toString(), password.toString(), password2.toString(), email.toString(), image.toString())
+
+                val call: Call<AuthToken> = retrofit.postRegister(postRegister)
+                call.enqueue(object : Callback<AuthToken> {
+                    override fun onResponse(call: Call<AuthToken>, response: Response<AuthToken>) {
                         Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Lütfen Giriş Yapın!", Toast.LENGTH_SHORT).show()
                         onBackPressed()
                     }
 
-                    override fun onFailure(call: Call<Images>, t: Throwable) {
-                        Log.e("Gallery Add Error", t.printStackTrace().toString())
+                    override fun onFailure(call: Call<AuthToken>, t: Throwable) {
+                        Log.e("Register Error", t.printStackTrace().toString())
                         Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
                     }
-                })*/
+                })
 
             }
 
@@ -385,6 +398,6 @@ class RegisterActivity : AppCompatActivity() {
         val intentLogin = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intentLogin)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

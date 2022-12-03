@@ -7,10 +7,21 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import com.bumptech.glide.Glide
 import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityProfileBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
+import com.mahmutalperenunal.whichcar.loginandregister.LoginActivity
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import com.mahmutalperenunal.whichcar.model.User
+import com.mahmutalperenunal.whichcar.model.auth.Logout
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -62,11 +73,9 @@ class ProfileActivity : AppCompatActivity() {
         //check last theme
         checkLastTheme()
 
-        //changeTheme()
+        checkConnection()
 
-        //checkConnection()
-
-        //getUserInformation()
+        getUserInformation()
 
 
         //set progressDialog
@@ -81,7 +90,7 @@ class ProfileActivity : AppCompatActivity() {
             intentEdit.putExtra("email", email)
             startActivity(intentEdit)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //go to favouritesActivity
@@ -89,11 +98,14 @@ class ProfileActivity : AppCompatActivity() {
             val intentFavoritesActivity = Intent(applicationContext, FavoritesActivity::class.java)
             startActivity(intentFavoritesActivity)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //change theme
         binding.profileThemeButton.setOnClickListener { setTheme() }
+
+        //logout
+        binding.profileLogoutButton.setOnClickListener { logOutDialog() }
 
         //back to homeActivity
         binding.profileBackButton.setOnClickListener { onBackPressed() }
@@ -152,7 +164,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
@@ -160,7 +172,7 @@ class ProfileActivity : AppCompatActivity() {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
-                    //.setIcon(R.drawable.without_internet)
+                    .setIcon(R.drawable.without_internet)
                     .setNegativeButton("Tamam") {
                             dialog, _ ->
                         checkConnection()
@@ -171,75 +183,53 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
-    //check theme and select current theme button
-    /*private fun checkTheme() {
-        when(theme) {
-            -1 -> binding.profileThemeButtonToggleGroup.check(R.id.profile_theme_systemDefault_button)
-            2 -> binding.profileThemeButtonToggleGroup.check(R.id.profile_theme_dark_button)
-            1 -> binding.profileThemeButtonToggleGroup.check(R.id.profile_theme_light_button)
-        }
-    }*/
+    //get user data
+    private fun getUserInformation() {
 
+        val retrofit = RetrofitInstance.apiUser
 
-    //set app theme
-    /*private fun changeTheme() {
-        binding.profileThemeButtonToggleGroup.addOnButtonCheckedListener { _, selectedBtnId, isChecked ->
-            if (isChecked) {
-                val theme = when (selectedBtnId) {
-                    R.id.profile_theme_systemDefault_button -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM //-1
-                    R.id.profile_theme_dark_button -> AppCompatDelegate.MODE_NIGHT_YES //2
-                    else -> AppCompatDelegate.MODE_NIGHT_NO //1
-                }
-                Log.d("ProfileActivity", "theme:$theme")
-                AppCompatDelegate.setDefaultNightMode(theme)
-                editorTheme.putInt("theme", theme)
-                editorTheme.apply()
+        val call: Call<User> = retrofit.getUser("Token $userToken", userId!!)
+        call.enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                /*response.body()!!.profilePhoto = "https://carsuggestion.herokuapp.com" + response.body()!!.profilePhoto
+
+                Log.d("Profile URL", response.body()!!.profilePhoto.toString())
+
+                Glide.with(applicationContext)
+                    .load(response.body()!!.profilePhoto)
+                    .centerCrop()
+                    .into(binding.profileProfilePhotoImageView)
+
+                email = response.body()!!.email
+
+                binding.profileEmailTextView.text = response.body()!!.email*/
+
             }
-        }
-    }*/
 
+            override fun onFailure(call: Call<User>, t: Throwable) {
 
-    /*private fun getUserInformation() {
-        val repository = RepositoryUsers()
-        val mainViewModelFactory = MainViewModelFactoryUsers(repository)
-        mainViewModelUsers = ViewModelProvider(this, mainViewModelFactory)[MainViewModelUsers::class.java]
-        mainViewModelUsers.getUsersId("Token $userToken", userId!!)
-        mainViewModelUsers.getUsersIdRepository.observe(this) { response ->
-            if (response.isSuccessful) {
-                binding.profileProgressBar.visibility = View.GONE
-                response.body()?.let {
-                    val size = response.body()!!.size - 1
-                    for (item in 0..size) {
-                        response.body()!![item].photo = "https://kresapp.herokuapp.com" + response.body()!![item].photo
-                        Log.d("URL", response.body()!![item].photo.toString())
-                        Glide.with(applicationContext)
-                            .load(response.body()!![item].photo)
-                            .centerCrop()
-                            .into(binding.profileProfilePhotoImageView)
-                        email = response.body()!![item].email
-                        binding.profileEmailTextView.text = response.body()!![item].email
-                    }
-                }
-            } else {
-                Log.e("Profile Error", response.code().toString())
-                Toast.makeText(applicationContext, "İşlem başarısız!", Toast.LENGTH_SHORT).show()
+                Log.e("Profile Error", t.printStackTrace().toString())
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+
             }
-        }
-    }*/
+        })
+
+    }
 
 
     //show logout dialog
     private fun logOutDialog() {
         AlertDialog.Builder(this, R.style.CustomAlertDialog)
             .setTitle("Çıkış Yap")
-            .setMessage("Çıkıl yapmak istediğinizden emin misiniz?")
-            //.setIcon(R.drawable.question)
+            .setMessage("Çıkış yapmak istediğinizden emin misiniz?")
+            .setIcon(R.drawable.question)
             .setPositiveButton("Çıkış Yap") {
                     dialog, _ ->
-                //logOutProcess()
+                logoutProcess()
                 dialog.dismiss()
             }
             .setNegativeButton("İptal") {
@@ -252,16 +242,16 @@ class ProfileActivity : AppCompatActivity() {
 
 
     //logout process
-    /*private fun logOutProcess() {
+    private fun logoutProcess() {
 
         progressDialog.show()
 
-        val repository = RepositoryLogOut()
-        val mainViewModelFactory = MainViewModelFactoryLogOut(repository)
-        mainViewModelLogOut = ViewModelProvider(this, mainViewModelFactory)[MainViewModelLogOut::class.java]
-        mainViewModelLogOut.postLogOutRequest()
-        mainViewModelLogOut.postLogOutRequestRepository.observe(this) { response ->
-            if (response.isSuccessful) {
+        val retrofit = RetrofitInstance.apiLogout
+
+        val call: Call<Logout> = retrofit.postLogout()
+        call.enqueue(object : Callback<Logout> {
+            override fun onResponse(call: Call<Logout>, response: Response<Logout>) {
+
                 Log.d("Logout Info", response.body()!!.detail)
 
                 //clear auto login shared preferences data
@@ -281,16 +271,28 @@ class ProfileActivity : AppCompatActivity() {
 
                 if (progressDialog.isShowing) progressDialog.dismiss()
 
-                onBackPressed()
+                //start loginActivity
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
 
                 Toast.makeText(applicationContext, "Çıkış Yapıldı!", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.e("Logout Error", response.code().toString())
-                Toast.makeText(applicationContext, "İşlem Başarısız. Lütfen Tekrar Deneyin!", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-    }*/
+            }
+
+            override fun onFailure(call: Call<Logout>, t: Throwable) {
+
+                if (progressDialog.isShowing) progressDialog.dismiss()
+
+                Log.e("Logout Error", t.printStackTrace().toString())
+
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+
+            }
+        })
+
+    }
 
 
     //back to homeActivity
@@ -299,6 +301,6 @@ class ProfileActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, HomeActivity::class.java)
         startActivity(intent)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

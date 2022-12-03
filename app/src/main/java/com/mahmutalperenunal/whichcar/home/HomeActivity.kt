@@ -12,6 +12,7 @@ import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.cardetail.BrandsActivity
 import com.mahmutalperenunal.whichcar.carsuggestion.CriteriaActivity
 import com.mahmutalperenunal.whichcar.databinding.ActivityHomeBinding
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
 
 class HomeActivity : AppCompatActivity() {
 
@@ -42,12 +43,15 @@ class HomeActivity : AppCompatActivity() {
         binding.homeMenuLinearLayout.startAnimation(animationFromBottom)
 
 
+        checkConnection()
+
+
         //go to criteriaActivity
         binding.homeCarSuggestionButton.setOnClickListener {
             val intentCars = Intent(applicationContext, CriteriaActivity::class.java)
             startActivity(intentCars)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //go to carsActivity
@@ -55,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
             val intentCars = Intent(applicationContext, BrandsActivity::class.java)
             startActivity(intentCars)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //go to profileActivity
@@ -73,6 +77,29 @@ class HomeActivity : AppCompatActivity() {
         } else {
             binding.homeUsernameTextView.text = ""
         }
+    }
+
+
+    //check connection
+    private fun checkConnection() {
+
+        val networkConnection = NetworkConnection(applicationContext)
+        networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
+            if (!isConnected) {
+                AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                    .setTitle("İnternet Bağlantısı Yok")
+                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setIcon(R.drawable.without_internet)
+                    .setNegativeButton("Tamam") {
+                            dialog, _ ->
+                        checkConnection()
+                        dialog.dismiss()
+                    }
+                    .create()
+                    .show()
+            }
+        })
+
     }
 
 
@@ -97,7 +124,7 @@ class HomeActivity : AppCompatActivity() {
             val intentProfile = Intent(applicationContext, ProfileActivity::class.java)
             startActivity(intentProfile)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
 

@@ -6,10 +6,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
+import androidx.core.view.isEmpty
 import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityLoginBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import com.mahmutalperenunal.whichcar.model.auth.AuthToken
+import com.mahmutalperenunal.whichcar.model.auth.Login
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -51,8 +61,8 @@ class LoginActivity : AppCompatActivity() {
         editorAuthToken = sharedPreferencesAuthToken.edit()
 
 
-        //checkConnection()
-        //checkLoginState()
+        checkConnection()
+        checkLoginState()
 
 
         //clear username edittext
@@ -110,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra("user type", "Guest")
             startActivity(intent)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
 
@@ -120,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
 
@@ -145,14 +155,12 @@ class LoginActivity : AppCompatActivity() {
 
 
     //check network connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
-            if (isConnected) {
-                connection = true
-            } else {
-                connection = false
+            if (!isConnected) {
+
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
@@ -164,21 +172,22 @@ class LoginActivity : AppCompatActivity() {
                     }
                     .create()
                     .show()
+
             }
         })
 
-    }*/
+    }
 
 
     //auto login
-    /*private fun autoLogin() {
+    private fun autoLogin() {
         editorAutoLogin.putString("remember", "true")
         editorAutoLogin.apply()
-    }*/
+    }
 
 
     //check auto login state
-    /*private fun checkLoginState() {
+    private fun checkLoginState() {
         val checkData = sharedPreferencesAutoLogin.getString("remember", null)
         val checkUsername = sharedPreferencesUsernamePassword.getString("rememberUsername", null)
 
@@ -199,10 +208,10 @@ class LoginActivity : AppCompatActivity() {
             binding.loginUsernameEditText.setText("")
         }
 
-    }*/
+    }
 
 
-    /*private fun startHomeActivity() {
+    private fun startHomeActivity() {
 
         binding.loginLoginButton.setOnClickListener {
 
@@ -219,17 +228,24 @@ class LoginActivity : AppCompatActivity() {
 
                 //if username and password edittext not empty, login authentication request and start homeActivity
                 else -> {
-                    loginProcess()
+
+                    val intent = Intent(applicationContext, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    intent.putExtra("user type", "Login")
+                    startActivity(intent)
+                    finish()
+
+                    //loginProcess()
+
                 }
             }
 
         }
 
-    }*/
+    }
 
 
     //login process
-    /*private fun loginProcess() {
+    private fun loginProcess() {
 
         progressDialog.show()
 
@@ -238,13 +254,13 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.loginUsernameEditText.text.toString().trim()
         val password = binding.loginPasswordEditText.text.toString().trim()
 
-        val repository = RepositoryLogIn()
-        val mainViewModelFactory = MainViewModelFactoryLogIn(repository)
-        mainViewModelLogIn = ViewModelProvider(this, mainViewModelFactory)[MainViewModelLogIn::class.java]
-        val postLogInRequest = LogInRequest(username, password)
-        mainViewModelLogIn.postLogInRequest(postLogInRequest)
-        mainViewModelLogIn.postLogInRequestRepository.observe(this) { response ->
-            if (response.isSuccessful) {
+        val postLogin = Login(username, password)
+
+        val retrofit = RetrofitInstance.apiLogin
+
+        val call: Call<AuthToken> = retrofit.postLogin(postLogin)
+        call.enqueue(object : Callback<AuthToken> {
+            override fun onResponse(call: Call<AuthToken>, response: Response<AuthToken>) {
 
                 val authToken = response.body()!!.authToken
 
@@ -266,19 +282,23 @@ class LoginActivity : AppCompatActivity() {
 
                 Toast.makeText(applicationContext, "Giriş Yapıldı!", Toast.LENGTH_SHORT).show()
 
-            } else {
+            }
+
+            override fun onFailure(call: Call<AuthToken>, t: Throwable) {
+
                 if (progressDialog.isShowing) progressDialog.dismiss()
 
-                Log.e("Login Error", response.code().toString())
+                Log.e("Login Error", t.printStackTrace().toString())
 
                 binding.loginUsernameEditTextLayout.error
                 binding.loginPasswordEditTextLayout.error
 
-                Toast.makeText(applicationContext, "Hatalı Giriş! Lütfen Tekrar Deneyin.", Toast.LENGTH_SHORT).show()
-            }
-        }
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
 
-    }*/
+            }
+        })
+
+    }
 
 
     //exit application
