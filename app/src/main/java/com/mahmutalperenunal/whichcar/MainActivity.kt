@@ -1,11 +1,23 @@
 package com.mahmutalperenunal.whichcar
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityMainBinding
+import com.mahmutalperenunal.whichcar.home.HomeActivity
 import com.mahmutalperenunal.whichcar.loginandregister.LoginActivity
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import com.mahmutalperenunal.whichcar.model.auth.AuthToken
+import com.mahmutalperenunal.whichcar.model.auth.Login
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -24,6 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     private var theme: Int? = null
 
+    private var username: String = ""
+    private var password: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,20 +51,23 @@ class MainActivity : AppCompatActivity() {
         sharedPreferencesAuthToken = getSharedPreferences("authToken", MODE_PRIVATE)
         sharedPreferencesTheme = getSharedPreferences("appTheme", MODE_PRIVATE)
 
+        username = sharedPreferencesUsernamePassword.getString("username", null).toString()
+        password = sharedPreferencesUsernamePassword.getString("password", null).toString()
+
         editorAutoLogin = sharedPreferencesAutoLogin.edit()
         editorUsername = sharedPreferencesUsernamePassword.edit()
         editorAuthToken = sharedPreferencesAuthToken.edit()
 
-        //checkTheme()
+        checkTheme()
 
-        //checkConnection()
+        checkConnection()
 
         startLoginActivity()
     }
 
 
     //control app theme
-    /*private fun checkTheme() {
+    private fun checkTheme() {
 
         theme = sharedPreferencesTheme.getInt("theme", 0)
 
@@ -61,16 +79,16 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "theme:$appTheme")
         AppCompatDelegate.setDefaultNightMode(appTheme)
 
-    }*/
+    }
 
 
     //check network connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (isConnected) {
-                autoLoginProcess()
+                startLoginActivity()
             } else {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
@@ -86,26 +104,23 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
     //auto login process
-    /*private fun autoLoginProcess() {
+    private fun autoLoginProcess() {
 
         if (sharedPreferencesAutoLogin.getString("remember", null) == "true") {
 
-            val username = sharedPreferencesUsernamePassword.getString("username", null)
-            val password = sharedPreferencesUsernamePassword.getString("password", null)
-
             val intentHome = Intent(this, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 
-            val repository = RepositoryLogIn()
-            val mainViewModelFactory = MainViewModelFactoryLogIn(repository)
-            mainViewModelLogIn = ViewModelProvider(this, mainViewModelFactory)[MainViewModelLogIn::class.java]
-            val postLogInRequest = LogInRequest(username.toString(), password.toString())
-            mainViewModelLogIn.postLogInRequest(postLogInRequest)
-            mainViewModelLogIn.postLogInRequestRepository.observe(this) { response ->
-                if (response.isSuccessful) {
+            val postLogin = Login(username, password)
+
+            val retrofit = RetrofitInstance.apiLogin
+
+            val call: Call<AuthToken> = retrofit.postLogin(postLogin)
+            call.enqueue(object : Callback<AuthToken> {
+                override fun onResponse(call: Call<AuthToken>, response: Response<AuthToken>) {
 
                     val authToken = response.body()!!.authToken
 
@@ -129,8 +144,11 @@ class MainActivity : AppCompatActivity() {
                     val timer = Timer()
                     timer.schedule(startActivityTimer, 2000)
 
-                } else {
-                    Log.e("Login Error", response.code().toString())
+                }
+
+                override fun onFailure(call: Call<AuthToken>, t: Throwable) {
+
+                    Log.e("Login Error", t.printStackTrace().toString())
 
                     val intentLogin = Intent(applicationContext, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 
@@ -142,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                     timer.schedule(startActivityTimer, 3000)
 
                 }
-            }
+            })
 
         } else {
 
@@ -158,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-    }*/
+    }
 
 
     private fun startLoginActivity() {

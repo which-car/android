@@ -1,14 +1,40 @@
 package com.mahmutalperenunal.whichcar.carsuggestion
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.adapter.CarAdapter
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.cardetail.BrandsActivity
+import com.mahmutalperenunal.whichcar.cardetail.DetailActivity
 import com.mahmutalperenunal.whichcar.databinding.ActivitySuggestedCarsBinding
+import com.mahmutalperenunal.whichcar.model.CarDetail
+import com.mahmutalperenunal.whichcar.model.CarSuggestion
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SuggestedCarsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySuggestedCarsBinding
+
+    private var brand: String = ""
+    private lateinit var models: ArrayList<String>
+
+    private var userToken: String? = null
+
+    private lateinit var sharedPreferencesAuthToken: SharedPreferences
+
+    private val carAdapter by lazy { CarAdapter(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,11 +42,16 @@ class SuggestedCarsActivity : AppCompatActivity() {
         binding = ActivitySuggestedCarsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //checkConnection()
+        models = arrayListOf()
 
-        //getSuggestedCarsData()
+        sharedPreferencesAuthToken = getSharedPreferences("authToken", MODE_PRIVATE)
+        userToken = sharedPreferencesAuthToken.getString("token", null)
 
-        //onClickProcess()
+        checkConnection()
+
+        getSuggestedCarsData()
+
+        onClickProcess()
 
         //back to criteriaActivity
         binding.suggestedCarBackButton.setOnClickListener { onBackPressed() }
@@ -28,7 +59,7 @@ class SuggestedCarsActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
@@ -36,7 +67,7 @@ class SuggestedCarsActivity : AppCompatActivity() {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
-                    //.setIcon(R.drawable.without_internet)
+                    .setIcon(R.drawable.without_internet)
                     .setNegativeButton("Tamam") {
                             dialog, _ ->
                         checkConnection()
@@ -47,61 +78,62 @@ class SuggestedCarsActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
     //get get suggested cars data
-    /*private fun getSuggestedCarsData() {
+    private fun getSuggestedCarsData() {
 
-        setupGalleryRecyclerview()
+        setupRecyclerview()
 
-        val repository = RepositoryGallery()
-        val mainViewModelFactory = MainViewModelFactoryGallery(repository)
-        mainViewModelGallery = ViewModelProvider(this, mainViewModelFactory)[MainViewModelGallery::class.java]
-        mainViewModelGallery.getImage("Token $userToken")
-        mainViewModelGallery.getImageRepository.observe(this) { response ->
-            if (response.isSuccessful) {
+        val retrofit = RetrofitInstance.apiCarSuggestion
 
-                binding.modelsProgressBar.visibility = View.GONE
+        val call: Call<List<CarDetail>> = retrofit.getSuggestedCar("Token $userToken")
+        call.enqueue(object : Callback<List<CarDetail>> {
+            override fun onResponse(call: Call<List<CarDetail>>, response: Response<List<CarDetail>>) {
+
+                binding.suggestedCarProgressBar.visibility = View.GONE
 
                 response.body()?.let {
                     val size = response.body()!!.size - 1
                     for (item in 0..size) {
-                        response.body()!![item].image = "https://kresapp.herokuapp.com" + response.body()!![item].image
-                        Log.d("URL", response.body()!![item].image.toString())
-                        galleryAdapter.setData(it)
-                        imageIds.add(response.body()!![item].id)
-                        imageTitles.add(response.body()!![item].imageTitle)
+                        models.add(response.body()!![item].model)
+                        brand = response.body()!![item].brand
+                        carAdapter.setData(it)
                     }
                 }
-            } else {
-                Log.e("Error", response.code().toString())
-                binding.modelsProgressBar.visibility = View.GONE
-                binding.modelsNoModelImageView.visibility = View.VISIBLE
-                binding.modelsNoModelTextView.visibility = View.VISIBLE
-                Toast.makeText(applicationContext, "İşlem başarısız. Lütfen tekrar deneyin!", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-    }*/
+            }
+
+            override fun onFailure(call: Call<List<CarDetail>>, t: Throwable) {
+
+                Log.e("Car Suggestion Error", t.printStackTrace().toString())
+
+                binding.suggestedCarProgressBar.visibility = View.GONE
+
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
 
 
     //setup recyclerView
-    /*private fun setupRecyclerview() {
-        binding.moduleGalleryMainListRecyclerView.adapter = galleryAdapter
-        binding.moduleGalleryMainListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        binding.moduleGalleryMainListRecyclerView.setHasFixedSize(true)
-    }*/
+    private fun setupRecyclerview() {
+        binding.suggestedCarRecyclerView.adapter = carAdapter
+        binding.suggestedCarRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        binding.suggestedCarRecyclerView.setHasFixedSize(true)
+    }
 
 
     //go to detailActivity
-    /*private fun onClickProcess() {
-        galleryAdapter.setOnItemClickListener(object : GalleryAdapter.OnItemClickListener {
+    private fun onClickProcess() {
+        carAdapter.setOnItemClickListener(object : CarAdapter.OnItemClickListener {
             @SuppressLint("SetTextI18n")
             override fun onItemClick(position: Int) {
 
                 val intent = Intent(applicationContext, DetailActivity::class.java)
-                intent.putExtra("Brand", brand)
+                intent.putExtra("Brand", brand[position])
                 intent.putExtra("Model", models[position])
                 startActivity(intent)
                 finish()
@@ -109,7 +141,7 @@ class SuggestedCarsActivity : AppCompatActivity() {
 
             }
         })
-    }*/
+    }
 
 
     //back to brandsActivity
@@ -118,6 +150,6 @@ class SuggestedCarsActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, CriteriaActivity::class.java)
         startActivity(intent)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

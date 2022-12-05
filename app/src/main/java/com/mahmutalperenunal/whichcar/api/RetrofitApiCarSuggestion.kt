@@ -11,24 +11,22 @@ interface RetrofitApiCarSuggestion {
 
     @GET("api/v1/car/suggested_car/")
     fun getSuggestedCar(
-        @Header("Authorization") auth: String,
-        @Path("id") id: Int
+        @Header("Authorization") auth: String
     ): Call<List<CarDetail>>
 
     @Multipart
     @POST("api/v1/car/suggestion_criteria/")
     fun postSuggestionCriteria(
         @Header("Authorization") auth: String,
-        @Part photo: MultipartBody.Part,
-        @Part("baggage_size") baggageSize: RequestBody,
-        @Part("fuel_efficiency") fuelEfficiency: RequestBody,
-        @Part("performance") performance: RequestBody,
-        @Part("safety") safety: RequestBody,
-        @Part("gearbox") gearbox: RequestBody,
-        @Part("chassis_type") chassisType: RequestBody,
-        @Part("wheel_drive") wheelDrive: RequestBody,
-        @Part("min_price") minPrice: RequestBody,
-        @Part("max_price") maxPrice: RequestBody,
+        @Part("baggage_size") baggageSize: Int,
+        @Part("fuel_efficiency") fuelEfficiency: Int,
+        @Part("performance") performance: Int,
+        @Part("safety") safety: Int,
+        @Part("gearbox") gearbox: String,
+        @Part("chassis_type") chassisType: String,
+        @Part("wheel_drive") wheelDrive: String,
+        @Part("min_price") minPrice: String,
+        @Part("max_price") maxPrice: String,
     ): Call<CarSuggestion>
 
 }

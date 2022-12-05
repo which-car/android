@@ -12,5 +12,6 @@ data class CarSuggestion (
         @SerializedName("chassis_type") var chassisType: String,
         @SerializedName("wheel_drive") var wheelDrive: String,
         @SerializedName("min_price") var minPrice: String,
-        @SerializedName("max_price") var maxPrice: String
+        @SerializedName("max_price") var maxPrice: String,
+        @SerializedName("photo") var carPhoto: String? = null
 )

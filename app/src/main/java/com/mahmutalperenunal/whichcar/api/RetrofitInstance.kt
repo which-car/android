@@ -14,7 +14,6 @@ object RetrofitInstance {
         GsonBuilder().setLenient().create()
     }
 
-    //create retrofit
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -22,34 +21,32 @@ object RetrofitInstance {
             .build()
     }
 
-    //create retrofit api for login proceed
     val apiLogin: RetrofitApiLogin by lazy {
         retrofit.create(RetrofitApiLogin::class.java)
     }
 
-    //create retrofit api for register proceed
     val apiRegister: RetrofitApiRegister by lazy {
         retrofit.create(RetrofitApiRegister::class.java)
     }
 
-    //create retrofit api for log out proceed
     val apiLogout: RetrofitApiLogout by lazy {
         retrofit.create(RetrofitApiLogout::class.java)
     }
 
-    //create retrofit api for log out proceed
     val apiCarDetail: RetrofitApiCarDetail by lazy {
         retrofit.create(RetrofitApiCarDetail::class.java)
     }
 
-    //create retrofit api for log out proceed
     val apiCarSuggestion: RetrofitApiCarSuggestion by lazy {
         retrofit.create(RetrofitApiCarSuggestion::class.java)
     }
 
-    //create retrofit api for log out proceed
     val apiUser: RetrofitApiUser by lazy {
         retrofit.create(RetrofitApiUser::class.java)
+    }
+
+    val apiFavorites: RetrofitApiFavorites by lazy {
+        retrofit.create(RetrofitApiFavorites::class.java)
     }
 
 }

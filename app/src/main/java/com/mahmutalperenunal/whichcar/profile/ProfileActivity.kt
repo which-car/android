@@ -95,8 +95,8 @@ class ProfileActivity : AppCompatActivity() {
 
         //go to favouritesActivity
         binding.profileFavouritesButton.setOnClickListener {
-            val intentFavoritesActivity = Intent(applicationContext, FavoritesActivity::class.java)
-            startActivity(intentFavoritesActivity)
+            val intentFavorites = Intent(applicationContext, FavoritesActivity::class.java)
+            startActivity(intentFavorites)
             finish()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }

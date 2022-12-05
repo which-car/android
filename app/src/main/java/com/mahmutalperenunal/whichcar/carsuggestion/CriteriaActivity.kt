@@ -1,23 +1,32 @@
 package com.mahmutalperenunal.whichcar.carsuggestion
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityCriteriaBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
+import com.mahmutalperenunal.whichcar.model.CarSuggestion
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CriteriaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCriteriaBinding
 
-    private var baggageSize: Int = 0
-    private var fuelEfficiency: Int = 0
-    private var performance: Int = 0
-    private var safety: Int = 0
+    private var baggageSize: String = ""
+    private var fuelEfficiency: String = ""
+    private var performance: String = ""
+    private var safety: String = ""
     private var gearbox: String = ""
     private var chassisType: String = ""
     private var wheelDrive: String = ""
@@ -25,6 +34,10 @@ class CriteriaActivity : AppCompatActivity() {
     private var maxPrice: String = ""
 
     private lateinit var progressDialog: ProgressDialog
+
+    private var userToken: String? = null
+
+    private lateinit var sharedPreferencesAuthToken: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,18 +49,18 @@ class CriteriaActivity : AppCompatActivity() {
         progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Öneriler Hazırlanıyor...")
 
+
+        sharedPreferencesAuthToken = getSharedPreferences("authToken", MODE_PRIVATE)
+        userToken = sharedPreferencesAuthToken.getString("token", null)
+
+
         setSelectableData()
 
-        //checkConnection()
+        checkConnection()
 
 
         //go to suggestedCarActivity
-        binding.criteriaSuggestButton.setOnClickListener {
-            val intent = Intent(applicationContext, SuggestedCarsActivity::class.java)
-            startActivity(intent)
-            finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        binding.criteriaSuggestButton.setOnClickListener { postCriteriaData() }
 
         //back to criteriaActivity
         binding.criteriaBackButton.setOnClickListener { onBackPressed() }
@@ -55,7 +68,7 @@ class CriteriaActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
@@ -63,7 +76,7 @@ class CriteriaActivity : AppCompatActivity() {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
-                    //.setIcon(R.drawable.without_internet)
+                    .setIcon(R.drawable.without_internet)
                     .setNegativeButton("Tamam") {
                             dialog, _ ->
                         checkConnection()
@@ -74,7 +87,7 @@ class CriteriaActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
     //set selectable data
@@ -113,10 +126,10 @@ class CriteriaActivity : AppCompatActivity() {
 
     //get values entered by user
     private fun getEnteredData() {
-        baggageSize = binding.criteriaBaggageSizeEditText.text.toString().toInt()
-        fuelEfficiency = binding.criteriaFuelEfficiencyEditText.text.toString().toInt()
-        performance = binding.criteriaPerformanceEditText.text.toString().toInt()
-        safety = binding.criteriaSafetyEditText.text.toString().toInt()
+        baggageSize = binding.criteriaBaggageSizeEditText.text.toString().trim()
+        fuelEfficiency = binding.criteriaFuelEfficiencyEditText.text.toString().trim()
+        performance = binding.criteriaPerformanceEditText.text.toString().trim()
+        safety = binding.criteriaSafetyEditText.text.toString().trim()
         gearbox = binding.criteriaGearboxEditText.text.toString().trim()
         chassisType = binding.criteriaChassisTypeEditText.text.toString().trim()
         wheelDrive = binding.criteriaWheelDriveEditText.text.toString().trim()
@@ -126,86 +139,93 @@ class CriteriaActivity : AppCompatActivity() {
 
 
     //post brand data
-    /*private fun postBrandData() {
+    private fun postCriteriaData() {
 
         progressDialog.show()
 
-        getEnteredData
+        getEnteredData()
 
-        if (baggageSize.equals("")) {
+        if (baggageSize == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaBaggageSizeEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
-        } else if (fuelEfficiency.equals("")) {
+        } else if (fuelEfficiency == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaFuelEfficiencyEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
-        } else if (performance.equals("")) {
+        } else if (performance == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaPerformanceEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
-        } else if (safety.equals("")) {
+        } else if (safety == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaSafetyEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
         } else if (gearbox == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaGearboxEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
         } else if (chassisType == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaChassisTypeEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
         } else if (wheelDrive == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaWheelDriveEditText.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
         } else if (minPrice == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaMinPriceEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
         } else if (maxPrice == "") {
 
+            if (progressDialog.isShowing) progressDialog.dismiss()
             binding.criteriaMaxPriceEditTextLayout.error = "Zorunlu"
             Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
 
         } else {
 
-            //val retrofit = RetrofitInstance.apiGallery
+            val retrofit = RetrofitInstance.apiCarSuggestion
 
-            //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", brand)
-            /*call.enqueue(object : Callback<Images> {
-                override fun onResponse(call: Call<Images>, response: Response<Images>) {
+            val call: Call<CarSuggestion> = retrofit.postSuggestionCriteria("Token $userToken", baggageSize.toInt(), fuelEfficiency.toInt(), performance.toInt(), safety.toInt(), gearbox, chassisType, wheelDrive, minPrice, maxPrice)
+            call.enqueue(object : Callback<CarSuggestion> {
+                override fun onResponse(call: Call<CarSuggestion>, response: Response<CarSuggestion>) {
 
                     if (progressDialog.isShowing) progressDialog.dismiss()
-
-                    Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(applicationContext, SuggestedCarsActivity::class.java)
                     startActivity(intent)
                     finish()
-                    //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
                 }
 
-                override fun onFailure(call: Call<Images>, t: Throwable) {
-                    if (progressDialog.isShowing) progressDialog.dismiss()
-                    Log.e("Gallery Add Error", t.printStackTrace().toString())
+                override fun onFailure(call: Call<CarSuggestion>, t: Throwable) {
+
+                    Log.e("Car Suggestion Error", t.printStackTrace().toString())
                     Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
                 }
-            })*/
+            })
 
         }
 
-    }*/
+    }
 
 
     //back to brandsActivity
@@ -214,6 +234,6 @@ class CriteriaActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, HomeActivity::class.java)
         startActivity(intent)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

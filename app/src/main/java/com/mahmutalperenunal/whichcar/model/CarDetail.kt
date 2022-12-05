@@ -18,5 +18,8 @@ data class CarDetail (
     @SerializedName("wheel_drive") var wheelDrive: String,
     @SerializedName("price") var price: String,
     @SerializedName("emission_result") var emissionResult: String,
-    @SerializedName("segment") var segment: String
+    @SerializedName("segment") var segment: String,
+    @SerializedName("like") var like: String,
+    @SerializedName("unlike") var unlike: String,
+    @SerializedName("photo") var carPhoto: String? = null
         )

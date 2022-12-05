@@ -1,19 +1,24 @@
 package com.mahmutalperenunal.whichcar.cardetail
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mahmutalperenunal.whichcar.R
+import com.mahmutalperenunal.whichcar.adapter.CarAdapter
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityModelsBinding
-import com.mahmutalperenunal.whichcar.home.HomeActivity
-import java.io.File
+import com.mahmutalperenunal.whichcar.model.CarDetail
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ModelsActivity : AppCompatActivity() {
 
@@ -21,6 +26,12 @@ class ModelsActivity : AppCompatActivity() {
 
     private var brand: String = ""
     private lateinit var models: ArrayList<String>
+
+    private var userToken: String? = null
+
+    private lateinit var sharedPreferencesAuthToken: SharedPreferences
+
+    private val carAdapter by lazy { CarAdapter(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,10 +44,13 @@ class ModelsActivity : AppCompatActivity() {
 
         models = arrayListOf()
 
-        //checkConnection()
+        sharedPreferencesAuthToken = getSharedPreferences("authToken", MODE_PRIVATE)
+        userToken = sharedPreferencesAuthToken.getString("token", null)
 
-        //postBrandData()
-        //onClickProcess()
+        checkConnection()
+
+        getModelData()
+        onClickProcess()
 
         //back to brandActivity
         binding.modelsBackButton.setOnClickListener { onBackPressed() }
@@ -44,7 +58,7 @@ class ModelsActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
@@ -52,7 +66,7 @@ class ModelsActivity : AppCompatActivity() {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
-                    //.setIcon(R.drawable.without_internet)
+                    .setIcon(R.drawable.without_internet)
                     .setNegativeButton("Tamam") {
                             dialog, _ ->
                         checkConnection()
@@ -63,80 +77,56 @@ class ModelsActivity : AppCompatActivity() {
             }
         })
 
-    }*/
-
-
-    //post brand data
-    /*private fun postBrandData() {
-
-        //val retrofit = RetrofitInstance.apiGallery
-
-        //val call: Call<Images> = retrofit.postGalleryItem("Token $userToken", brand)
-        /*call.enqueue(object : Callback<Images> {
-            override fun onResponse(call: Call<Images>, response: Response<Images>) {
-
-                Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
-
-                getModelData()
-
-            }
-
-            override fun onFailure(call: Call<Images>, t: Throwable) {
-                Log.e("Gallery Add Error", t.printStackTrace().toString())
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
-            }
-        })*/
-
-    }*/
+    }
 
 
     //get model data
-    /*private fun getModelData() {
+    private fun getModelData() {
 
-        setupGalleryRecyclerview()
+        setupRecyclerview()
 
-        val repository = RepositoryGallery()
-        val mainViewModelFactory = MainViewModelFactoryGallery(repository)
-        mainViewModelGallery = ViewModelProvider(this, mainViewModelFactory)[MainViewModelGallery::class.java]
-        mainViewModelGallery.getImage("Token $userToken")
-        mainViewModelGallery.getImageRepository.observe(this) { response ->
-            if (response.isSuccessful) {
+        val retrofit = RetrofitInstance.apiCarDetail
+
+        val call: Call<List<CarDetail>> = retrofit.getCarDetailList("Token $userToken", brand)
+        call.enqueue(object : Callback<List<CarDetail>> {
+            override fun onResponse(call: Call<List<CarDetail>>, response: Response<List<CarDetail>>) {
 
                 binding.modelsProgressBar.visibility = View.GONE
 
                 response.body()?.let {
                     val size = response.body()!!.size - 1
                     for (item in 0..size) {
-                        response.body()!![item].image = "https://kresapp.herokuapp.com" + response.body()!![item].image
-                        Log.d("URL", response.body()!![item].image.toString())
-                        galleryAdapter.setData(it)
-                        imageIds.add(response.body()!![item].id)
-                        imageTitles.add(response.body()!![item].imageTitle)
+                        models.add(response.body()!![item].model)
+                        carAdapter.setData(it)
                     }
                 }
-            } else {
-                Log.e("Error", response.code().toString())
-                binding.modelsProgressBar.visibility = View.GONE
-                binding.modelsNoModelImageView.visibility = View.VISIBLE
-                binding.modelsNoModelTextView.visibility = View.VISIBLE
-                Toast.makeText(applicationContext, "İşlem başarısız. Lütfen tekrar deneyin!", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-    }*/
+            }
+
+            override fun onFailure(call: Call<List<CarDetail>>, t: Throwable) {
+
+                Log.e("Car Detail Error", t.printStackTrace().toString())
+
+                binding.modelsProgressBar.visibility = View.GONE
+
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
 
 
     //setup recyclerView
-    /*private fun setupRecyclerview() {
-        binding.moduleGalleryMainListRecyclerView.adapter = galleryAdapter
-        binding.moduleGalleryMainListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        binding.moduleGalleryMainListRecyclerView.setHasFixedSize(true)
-    }*/
+    private fun setupRecyclerview() {
+        binding.modelsRecyclerView.adapter = carAdapter
+        binding.modelsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        binding.modelsRecyclerView.setHasFixedSize(true)
+    }
 
 
     //go to detailActivity
-    /*private fun onClickProcess() {
-        galleryAdapter.setOnItemClickListener(object : GalleryAdapter.OnItemClickListener {
+    private fun onClickProcess() {
+        carAdapter.setOnItemClickListener(object : CarAdapter.OnItemClickListener {
             @SuppressLint("SetTextI18n")
             override fun onItemClick(position: Int) {
 
@@ -149,7 +139,7 @@ class ModelsActivity : AppCompatActivity() {
 
             }
         })
-    }*/
+    }
 
 
     //back to brandsActivity
@@ -158,6 +148,6 @@ class ModelsActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, BrandsActivity::class.java)
         startActivity(intent)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

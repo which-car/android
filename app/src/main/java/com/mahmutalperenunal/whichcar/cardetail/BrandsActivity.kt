@@ -1,10 +1,13 @@
 package com.mahmutalperenunal.whichcar.cardetail
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.databinding.ActivityBrandsBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
 
 class BrandsActivity : AppCompatActivity() {
 
@@ -16,7 +19,7 @@ class BrandsActivity : AppCompatActivity() {
         binding = ActivityBrandsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //checkConnection()
+        checkConnection()
 
         goToModelActivity()
 
@@ -26,7 +29,7 @@ class BrandsActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
@@ -34,7 +37,7 @@ class BrandsActivity : AppCompatActivity() {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
-                    //.setIcon(R.drawable.without_internet)
+                    .setIcon(R.drawable.without_internet)
                     .setNegativeButton("Tamam") {
                             dialog, _ ->
                         checkConnection()
@@ -45,7 +48,7 @@ class BrandsActivity : AppCompatActivity() {
             }
         })
 
-    }*/
+    }
 
 
     private fun goToModelActivity() {
@@ -55,7 +58,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Audi")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton2.setOnClickListener {
@@ -63,7 +66,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "BMW")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton3.setOnClickListener {
@@ -71,7 +74,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Citroen")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton4.setOnClickListener {
@@ -79,7 +82,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Dacia")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton5.setOnClickListener {
@@ -87,7 +90,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Fiat")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton6.setOnClickListener {
@@ -95,7 +98,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Ford")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton7.setOnClickListener {
@@ -103,7 +106,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Honda")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton8.setOnClickListener {
@@ -111,7 +114,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Hyundai")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton9.setOnClickListener {
@@ -119,7 +122,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Mercedes")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton10.setOnClickListener {
@@ -127,7 +130,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Nissan")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton11.setOnClickListener {
@@ -135,7 +138,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Opel")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton12.setOnClickListener {
@@ -143,7 +146,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Peugeot")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton13.setOnClickListener {
@@ -151,7 +154,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Renault")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton14.setOnClickListener {
@@ -159,7 +162,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Seat")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton15.setOnClickListener {
@@ -167,7 +170,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Skoda")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton16.setOnClickListener {
@@ -175,7 +178,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Toyota")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton17.setOnClickListener {
@@ -183,7 +186,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Volkswagen")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.carsButton18.setOnClickListener {
@@ -191,7 +194,7 @@ class BrandsActivity : AppCompatActivity() {
             intentModels.putExtra("Brand", "Volvo")
             startActivity(intentModels)
             finish()
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }
@@ -202,6 +205,6 @@ class BrandsActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, HomeActivity::class.java)
         startActivity(intent)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

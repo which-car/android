@@ -1,19 +1,29 @@
 package com.mahmutalperenunal.whichcar.cardetail
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.mahmutalperenunal.whichcar.R
 import com.mahmutalperenunal.whichcar.adapter.detail.CarImageAdapter
+import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityDetailBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
+import com.mahmutalperenunal.whichcar.model.CarDetail
+import com.mahmutalperenunal.whichcar.model.NetworkConnection
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.math.abs
 
 class DetailActivity : AppCompatActivity() {
@@ -25,12 +35,38 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var imageList:ArrayList<Int>
     private lateinit var adapter: CarImageAdapter
 
+    private var brand: String = ""
+    private var model: String = ""
+
+    private var userToken: String? = null
+
+    private lateinit var sharedPreferencesAuthToken: SharedPreferences
+    private lateinit var sharedPreferencesUsernamePassword: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //get data from modelsActivity
+        brand = intent.getStringExtra("Brand").toString()
+        model = intent.getStringExtra("Model").toString()
+
+
+        sharedPreferencesAuthToken = getSharedPreferences("authToken", MODE_PRIVATE)
+        sharedPreferencesUsernamePassword = getSharedPreferences("autoUsernamePassword", MODE_PRIVATE)
+
+        userToken = sharedPreferencesAuthToken.getString("token", null)
+
+        setFavoriteButtonVisibility()
+
+        checkConnection()
+
+        getDetailData()
+
+
+        //set image animation
         init()
         setUpTransformer()
 
@@ -43,9 +79,10 @@ class DetailActivity : AppCompatActivity() {
         })
 
 
-        //checkConnection()
+        //add to favorites
+        binding.detailAddFavoriteButton.setOnClickListener { addToFavorites() }
 
-
+        //back
         binding.detailBackButton.setOnClickListener { onBackPressed() }
     }
 
@@ -59,7 +96,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        handler.postDelayed(runnable , 3000)
+        handler.postDelayed(runnable , 5000)
     }
 
     private val runnable = Runnable {
@@ -98,7 +135,7 @@ class DetailActivity : AppCompatActivity() {
 
 
     //check connection
-    /*private fun checkConnection() {
+    private fun checkConnection() {
 
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
@@ -106,7 +143,7 @@ class DetailActivity : AppCompatActivity() {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
                     .setTitle("İnternet Bağlantısı Yok")
                     .setMessage("Lütfen internet bağlantınızı kontrol edin!")
-                    //.setIcon(R.drawable.without_internet)
+                    .setIcon(R.drawable.without_internet)
                     .setNegativeButton("Tamam") {
                             dialog, _ ->
                         checkConnection()
@@ -116,39 +153,90 @@ class DetailActivity : AppCompatActivity() {
                     .show()
             }
         })
-    }*/
+    }
 
 
     //get detail data
-    /*private fun getDetailData() {
+    private fun getDetailData() {
 
-        val repository = RepositoryGallery()
-        val mainViewModelFactory = MainViewModelFactoryGallery(repository)
-        mainViewModelGallery = ViewModelProvider(this, mainViewModelFactory)[MainViewModelGallery::class.java]
-        mainViewModelGallery.getImage("Token $userToken")
-        mainViewModelGallery.getImageRepository.observe(this) { response ->
-            if (response.isSuccessful) {
+        val retrofit = RetrofitInstance.apiCarDetail
+
+        val call: Call<CarDetail> = retrofit.getCarDetail("Token $userToken", brand, model)
+        call.enqueue(object : Callback<CarDetail> {
+            override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
 
                 binding.detailProgressBar.visibility = View.GONE
 
-                response.body()?.let {
-                    val size = response.body()!!.size - 1
-                    for (item in 0..size) {
-                        response.body()!![item].image = "https://kresapp.herokuapp.com" + response.body()!![item].image
-                        Log.d("URL", response.body()!![item].image.toString())
-                        galleryAdapter.setData(it)
-                        imageIds.add(response.body()!![item].id)
-                        imageTitles.add(response.body()!![item].imageTitle)
-                    }
-                }
-            } else {
-                Log.e("Error", response.code().toString())
-                binding.modelsProgressBar.visibility = View.GONE
-                Toast.makeText(applicationContext, "İşlem başarısız. Lütfen tekrar deneyin!", Toast.LENGTH_SHORT).show()
-            }
-        }
+                //set data
+                binding.detailBrandTextView.text = brand
+                binding.detailModelTextView.text = model
+                /*binding.detailAccelerationTextView.text = response.body()!!.acceleration
+                binding.detailBaggageSizeTextView.text = response.body()!!.baggageSize
+                binding.detailChassisTypeTextView.text = response.body()!!.chassisType
+                binding.detailEmissionResultTextView.text = response.body()!!.emissionResult
+                binding.detailEngineTextView.text = response.body()!!.engine
+                binding.detailFuelEfficiencyTextView.text = response.body()!!.fuelEfficiency
+                binding.detailGearboxTextView.text = response.body()!!.gearbox
+                binding.detailEuroNcapResultTextView.text = response.body()!!.safety
+                binding.detailPriceTextView.text = response.body()!!.price
+                binding.detailSegmentTextView.text = response.body()!!.segment
+                binding.detailLikeTextView.text = response.body()!!.like
+                binding.detailUnlikeTextView.text = response.body()!!.unlike
 
-    }*/
+                val carPhoto = findViewById<ImageView>(R.id.car_container_imageView)
+
+                Glide.with(applicationContext)
+                    .load(response.body()!!.carPhoto)
+                    .centerCrop()
+                    .into(carPhoto)*/
+
+            }
+
+            override fun onFailure(call: Call<CarDetail>, t: Throwable) {
+
+                Log.e("Car Detail Error", t.printStackTrace().toString())
+
+                binding.detailProgressBar.visibility = View.GONE
+
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+
+
+    //set favorite button visibility
+    private fun setFavoriteButtonVisibility() {
+        if (sharedPreferencesUsernamePassword.getString("username", null) != "") {
+            binding.detailAddFavoriteButton.visibility = View.VISIBLE
+        } else {
+            binding.detailAddFavoriteButton.visibility = View.GONE
+        }
+    }
+
+
+    //add to favorites
+    private fun addToFavorites() {
+
+        val retrofit = RetrofitInstance.apiFavorites
+
+        val call: Call<CarDetail> = retrofit.postFavorite("Token $userToken", 1)
+        call.enqueue(object : Callback<CarDetail> {
+            override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
+
+                Toast.makeText(applicationContext, "Araç Favorilere Eklendi!", Toast.LENGTH_SHORT).show()
+
+            }
+
+            override fun onFailure(call: Call<CarDetail>, t: Throwable) {
+
+                Log.e("Car Detail Error", t.printStackTrace().toString())
+
+                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
 
 
     //back to homeActivity
@@ -157,6 +245,6 @@ class DetailActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, HomeActivity::class.java)
         startActivity(intent)
         finish()
-        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }
