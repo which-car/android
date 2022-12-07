@@ -40,6 +40,9 @@ class DetailActivity : AppCompatActivity() {
 
     private var userToken: String? = null
 
+    private var like: Int = 10
+    private var unlike: Int = 10
+
     private lateinit var sharedPreferencesAuthToken: SharedPreferences
     private lateinit var sharedPreferencesUsernamePassword: SharedPreferences
 
@@ -64,6 +67,8 @@ class DetailActivity : AppCompatActivity() {
         checkConnection()
 
         getDetailData()
+
+        postLikeUnlikeData()
 
 
         //set image animation
@@ -121,7 +126,6 @@ class DetailActivity : AppCompatActivity() {
 
         imageList.add(R.drawable.car)
         imageList.add(R.drawable.car2)
-
 
         adapter = CarImageAdapter(imageList, viewPager2)
 
@@ -235,6 +239,96 @@ class DetailActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
             }
         })
+
+    }
+
+
+    //send like and unlike data
+    private fun postLikeUnlikeData() {
+
+        binding.detailLikeButton.setOnClickListener {
+
+            AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .setTitle("Öneri")
+                .setMessage("Bu aracı diğer kullanıcılar için öneriyor musunuz?.")
+                .setIcon(R.drawable.question)
+                .setPositiveButton("Öneriyorum") {
+                        dialog, _ ->
+
+                    like++
+                    binding.detailLikeTextView.text = like.toString()
+
+                    val retrofit = RetrofitInstance.apiCarDetail
+
+                    val call: Call<CarDetail> = retrofit.postRecommendData("Token $userToken", brand, model)
+                    call.enqueue(object : Callback<CarDetail> {
+                        override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
+
+                            Toast.makeText(applicationContext, "Araç Önerildi!", Toast.LENGTH_SHORT).show()
+
+                        }
+
+                        override fun onFailure(call: Call<CarDetail>, t: Throwable) {
+
+                            Log.e("Car Like Error", t.printStackTrace().toString())
+
+                            Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
+                    dialog.dismiss()
+                }
+                .setNegativeButton("İptal") {
+                        dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+
+        }
+
+        binding.detailUnlikeButton.setOnClickListener {
+
+            AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .setTitle("Öneri")
+                .setMessage("Bu aracı diğer kullanıcılara önermiyor musunuz?.")
+                .setIcon(R.drawable.question)
+                .setPositiveButton("Önermiyorum") { dialog, _ ->
+
+                    unlike++
+                    binding.detailUnlikeTextView.text = unlike.toString()
+
+                    val retrofit = RetrofitInstance.apiCarDetail
+
+                    val call: Call<CarDetail> =
+                        retrofit.postRecommendData("Token $userToken", brand, model)
+                    call.enqueue(object : Callback<CarDetail> {
+                        override fun onResponse(
+                            call: Call<CarDetail>,
+                            response: Response<CarDetail>
+                        ) {
+
+                            Toast.makeText(applicationContext, "Araç Önerilmedi!", Toast.LENGTH_SHORT).show()
+
+                        }
+
+                        override fun onFailure(call: Call<CarDetail>, t: Throwable) {
+
+                            Log.e("Car Like Error", t.printStackTrace().toString())
+
+                            Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
+                    dialog.dismiss()
+                }
+                .setNegativeButton("İptal") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+
+        }
 
     }
 

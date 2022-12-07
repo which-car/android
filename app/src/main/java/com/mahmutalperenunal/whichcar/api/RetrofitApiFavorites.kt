@@ -13,7 +13,7 @@ interface RetrofitApiFavorites {
     ): Call<List<CarDetail>>
 
     @Multipart
-    @POST("api/v1/car/favorites/post/")
+    @POST("api/v1/car/favorites/post/{id}/")
     fun postFavorite(
         @Header("Authorization") auth: String,
         @Part("id") id: Int

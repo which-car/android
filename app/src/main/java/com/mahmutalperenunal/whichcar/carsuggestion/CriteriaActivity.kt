@@ -138,7 +138,7 @@ class CriteriaActivity : AppCompatActivity() {
     }
 
 
-    //post brand data
+    //post criteria data
     private fun postCriteriaData() {
 
         progressDialog.show()

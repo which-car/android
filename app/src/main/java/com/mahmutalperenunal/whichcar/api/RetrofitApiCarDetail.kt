@@ -19,4 +19,11 @@ interface RetrofitApiCarDetail {
         @Path("model") model: String
     ): Call<CarDetail>
 
+    @GET("api/v1/car/detail/{brand}/{model}")
+    fun postRecommendData(
+        @Header("Authorization") auth: String,
+        @Path("brand") brand: String,
+        @Path("model") model: String
+    ): Call<CarDetail>
+
 }

@@ -186,39 +186,39 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    //get user data
-    private fun getUserInformation() {
+        //get user data
+        private fun getUserInformation() {
 
-        val retrofit = RetrofitInstance.apiUser
+            val retrofit = RetrofitInstance.apiUser
 
-        val call: Call<User> = retrofit.getUser("Token $userToken", userId!!)
-        call.enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
+            val call: Call<User> = retrofit.getUser("Token $userToken", userId!!)
+            call.enqueue(object : Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
 
-                /*response.body()!!.profilePhoto = "https://carsuggestion.herokuapp.com" + response.body()!!.profilePhoto
+                    /*response.body()!!.profilePhoto = "https://carsuggestion.herokuapp.com" + response.body()!!.profilePhoto
 
-                Log.d("Profile URL", response.body()!!.profilePhoto.toString())
+                    Log.d("Profile URL", response.body()!!.profilePhoto.toString())
 
-                Glide.with(applicationContext)
-                    .load(response.body()!!.profilePhoto)
-                    .centerCrop()
-                    .into(binding.profileProfilePhotoImageView)
+                    Glide.with(applicationContext)
+                        .load(response.body()!!.profilePhoto)
+                        .centerCrop()
+                        .into(binding.profileProfilePhotoImageView)
 
-                email = response.body()!!.email
+                    email = response.body()!!.email
 
-                binding.profileEmailTextView.text = response.body()!!.email*/
+                    binding.profileEmailTextView.text = response.body()!!.email*/
 
-            }
+                }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<User>, t: Throwable) {
 
-                Log.e("Profile Error", t.printStackTrace().toString())
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                    Log.e("Profile Error", t.printStackTrace().toString())
+                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
 
-            }
-        })
+                }
+            })
 
-    }
+        }
 
 
     //show logout dialog

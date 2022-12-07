@@ -12,6 +12,7 @@
         android:id="@+id/profile_edit_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,12 +23,12 @@
         android:id="@+id/profile_edit_back_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_edit_profilePhoto_imageView"
