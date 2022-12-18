@@ -90,7 +90,7 @@
         android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/models_progressBar"

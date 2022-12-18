@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
         //animation to show until username and password are verified
         progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Giriş Yapılıyor...")
+        progressDialog.setMessage(R.string.signing_in_text.toString())
 
 
         passwordEdittext = binding.loginPasswordEditText
@@ -80,11 +80,11 @@ class LoginActivity : AppCompatActivity() {
             when {
                 binding.loginUsernameEditText.text.toString().isEmpty() -> {
                     if (progressDialog.isShowing) progressDialog.dismiss()
-                    binding.loginUsernameEditText.error = "Bu alan boş bırakılamaz!"
+                    binding.loginUsernameEditText.error = resources.getString(R.string.not_left_blank_text)
                 }
                 binding.loginPasswordEditText.text.toString().isEmpty() -> {
                     if (progressDialog.isShowing) progressDialog.dismiss()
-                    binding.loginPasswordEditText.error = "Bu alan boş bırakılamaz!"
+                    binding.loginPasswordEditText.error = resources.getString(R.string.not_left_blank_text)
                 }
 
                 //if username and password edittext not empty, login authentication request and start homeActivity
@@ -140,10 +140,10 @@ class LoginActivity : AppCompatActivity() {
             if (progressDialog.isShowing) progressDialog.dismiss()
 
             AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                .setTitle("Şifreni mi unuttun?")
-                .setMessage("Şifrenizi öğrenmek için lütfen iletişime geçiniz.")
+                .setTitle(R.string.forgot_password_text)
+                .setMessage(R.string.forgot_password_description_text)
                 .setIcon(R.drawable.question)
-                .setNegativeButton("Tamam") {
+                .setNegativeButton(R.string.ok_text) {
                         dialog, _ ->
                     dialog.dismiss()
                 }
@@ -162,10 +162,10 @@ class LoginActivity : AppCompatActivity() {
             if (!isConnected) {
 
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -220,10 +220,10 @@ class LoginActivity : AppCompatActivity() {
             //if username and password edittext is empty, set error
             when {
                 binding.loginUsernameEditTextLayout.isEmpty() -> {
-                    binding.loginUsernameEditTextLayout.error = "Bu alan boş bırakılamaz!"
+                    binding.loginUsernameEditTextLayout.error = resources.getString(R.string.not_left_blank_text)
                 }
                 binding.loginPasswordEditText.text.toString().isEmpty() -> {
-                    binding.loginPasswordEditText.error = "Bu alan boş bırakılamaz!"
+                    binding.loginPasswordEditText.error = resources.getString(R.string.not_left_blank_text)
                 }
 
                 //if username and password edittext not empty, login authentication request and start homeActivity
@@ -280,7 +280,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (progressDialog.isShowing) progressDialog.dismiss()
 
-                Toast.makeText(applicationContext, "Giriş Yapıldı!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.logged_text, Toast.LENGTH_SHORT).show()
 
             }
 
@@ -293,7 +293,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.loginUsernameEditTextLayout.error
                 binding.loginPasswordEditTextLayout.error
 
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
 
             }
         })

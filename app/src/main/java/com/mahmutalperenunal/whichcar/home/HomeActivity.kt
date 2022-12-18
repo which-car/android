@@ -87,10 +87,10 @@ class HomeActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -109,10 +109,10 @@ class HomeActivity : AppCompatActivity() {
         if (intent.getStringExtra("user type") == "Guest") {
 
             AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                .setTitle("Profil")
-                .setMessage("Kullanıcı girişi yapmalısınız!")
+                .setTitle(R.string.profile_text)
+                .setMessage(R.string.must_login_text)
                 .setIcon(R.drawable.wrong)
-                .setNegativeButton("Tamam") {
+                .setNegativeButton(R.string.ok_text) {
                         dialog, _ ->
                     dialog.dismiss()
                 }
@@ -134,10 +134,10 @@ class HomeActivity : AppCompatActivity() {
     //about the app
     private fun about() {
         AlertDialog.Builder(this, R.style.CustomAlertDialog)
-            .setTitle("Hakkında")
-            .setMessage("Bu uygulama ile araç önerisi alabilir, teknik detaylarını görüntüleyebilir ve yorumda bulunabilirsiniz.")
+            .setTitle(R.string.about_text)
+            .setMessage(R.string.about_description_text)
             .setIcon(R.drawable.question)
-            .setPositiveButton("Tamam") {
+            .setPositiveButton(R.string.ok_text) {
                     dialog, _ ->
                 dialog.dismiss()
             }

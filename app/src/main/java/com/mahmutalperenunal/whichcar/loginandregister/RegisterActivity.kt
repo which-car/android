@@ -94,10 +94,10 @@ class RegisterActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(applicationContext, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -129,7 +129,7 @@ class RegisterActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (binding.registerPasswordEditText.text.toString() != binding.registerPassword2EditText.text.toString()) {
-                    binding.registerPasswordEditTextLayout.helperText = "Şifreler Eşleşmiyor!"
+                    binding.registerPasswordEditTextLayout.helperText = resources.getString(R.string.password_do_not_match_text)
                     passwordControl = false
                 } else {
                     binding.registerPassword2EditTextLayout.helperText = ""
@@ -154,7 +154,7 @@ class RegisterActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!Patterns.EMAIL_ADDRESS.matcher(binding.registerEmailEditText.text.toString()).matches()) {
-                    binding.registerEmailEditTextLayout.helperText = "Geçersiz Mail Adresi!"
+                    binding.registerEmailEditTextLayout.helperText = resources.getString(R.string.invalid_mail_address_text)
                     emailControl = false
                 } else {
                     binding.registerEmailEditTextLayout.helperText = ""
@@ -173,22 +173,22 @@ class RegisterActivity : AppCompatActivity() {
     //set profile photo
     private fun setProfilePhoto() {
         AlertDialog.Builder(this, R.style.CustomAlertDialog)
-            .setTitle("Profile Fotoğrafı Ekle")
-            .setMessage("Eklemek istediğiniz foroğrafı veya avatarı seçiniz.")
+            .setTitle(R.string.add_profile_photo_title_text)
+            .setMessage(R.string.add_profile_photo_description_text)
             .setIcon(R.drawable.add_profile)
-            .setPositiveButton("Galeri") {
+            .setPositiveButton(R.string.gallery_text) {
                     dialog, _ ->
                 requestStorage.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 clicked = true
                 dialog.dismiss()
             }
-            .setNegativeButton("Kamera") {
+            .setNegativeButton(R.string.camera_text) {
                     dialog, _ ->
                 requestCamera.launch(android.Manifest.permission.CAMERA)
                 clicked = true
                 dialog.dismiss()
             }
-            .setNeutralButton("Avatar") {
+            .setNeutralButton(R.string.avatar_text) {
                     dialog, _ ->
                 clicked = true
                 dialog.dismiss()
@@ -235,7 +235,7 @@ class RegisterActivity : AppCompatActivity() {
             if (it) {
                 pickUpImageFromCamera()
             } else {
-                Toast.makeText(applicationContext, "İzin verilmedi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.not_allowed_text, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -243,7 +243,7 @@ class RegisterActivity : AppCompatActivity() {
             if (it) {
                 pickUpImageFromGallery()
             } else {
-                Toast.makeText(applicationContext, "İzin verilmedi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.not_allowed_text, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -318,23 +318,23 @@ class RegisterActivity : AppCompatActivity() {
         //check edittext
         if (binding.registerUsernameEditText.text!!.isEmpty()) {
 
-            binding.registerUsernameEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+            binding.registerUsernameEditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (binding.registerPasswordEditText.text!!.isEmpty() || !passwordControl) {
 
-            binding.registerPasswordEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+            binding.registerPasswordEditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (binding.registerPassword2EditText.text!!.isEmpty() || !passwordControl) {
 
-            binding.registerPassword2EditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+            binding.registerPassword2EditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (binding.registerEmailEditText.text!!.isEmpty() || !emailControl) {
 
-            binding.registerEmailEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+            binding.registerEmailEditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else {
 
@@ -342,9 +342,9 @@ class RegisterActivity : AppCompatActivity() {
 
             //check passwords
             if (password1 != password2) {
-                binding.registerPasswordEditText.error = "Hatalı"
-                binding.registerPassword2EditText.error = "Hatalı"
-                Toast.makeText(applicationContext, "Girilen şifreler uyuşmamaktadır! Lütfen tekrar deneyin.", Toast.LENGTH_SHORT).show()
+                binding.registerPasswordEditText.error = resources.getString(R.string.in_correct_text)
+                binding.registerPassword2EditText.error = resources.getString(R.string.in_correct_text)
+                Toast.makeText(applicationContext, R.string.password_do_not_match_text2, Toast.LENGTH_SHORT).show()
             } else {
 
                 val retrofit = RetrofitInstance.apiRegister
@@ -374,14 +374,14 @@ class RegisterActivity : AppCompatActivity() {
                 val call: Call<AuthToken> = retrofit.postRegister(postRegister)
                 call.enqueue(object : Callback<AuthToken> {
                     override fun onResponse(call: Call<AuthToken>, response: Response<AuthToken>) {
-                        Toast.makeText(applicationContext, "Kullanıcı Kaydı Oluşturuldu!", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(applicationContext, "Lütfen Giriş Yapın!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.user_registration_created_text, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.please_login_text, Toast.LENGTH_SHORT).show()
                         onBackPressed()
                     }
 
                     override fun onFailure(call: Call<AuthToken>, t: Throwable) {
                         Log.e("Register Error", t.printStackTrace().toString())
-                        Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
                     }
                 })
 

@@ -113,10 +113,10 @@ class ProfileEditActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(applicationContext, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -152,7 +152,7 @@ class ProfileEditActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!Patterns.EMAIL_ADDRESS.matcher(binding.profileEditEmailEditText.text.toString()).matches()) {
-                    binding.profileEditEmailEditTextLayout.helperText = "Geçersiz Mail Adresi!"
+                    binding.profileEditEmailEditTextLayout.helperText = resources.getString(R.string.invalid_mail_address_text)
                     emailControl = false
                 } else {
                     binding.profileEditEmailEditTextLayout.helperText = ""
@@ -171,22 +171,22 @@ class ProfileEditActivity : AppCompatActivity() {
     //set profile photo
     private fun setProfilePhoto() {
         AlertDialog.Builder(this, R.style.CustomAlertDialog)
-            .setTitle("Profile Fotoğrafı Ekle")
-            .setMessage("Eklemek istediğiniz foroğrafı veya avatarı seçiniz.")
+            .setTitle(R.string.add_profile_photo_title_text)
+            .setMessage(R.string.add_profile_photo_description_text)
             .setIcon(R.drawable.add_profile)
-            .setPositiveButton("Galeri") {
+            .setPositiveButton(R.string.gallery_text) {
                     dialog, _ ->
                 requestStorage.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 clicked = true
                 dialog.dismiss()
             }
-            .setNegativeButton("Kamera") {
+            .setNegativeButton(R.string.camera_text) {
                     dialog, _ ->
                 requestCamera.launch(android.Manifest.permission.CAMERA)
                 clicked = true
                 dialog.dismiss()
             }
-            .setNeutralButton("Avatar") {
+            .setNeutralButton(R.string.avatar_text) {
                     dialog, _ ->
                 clicked = true
                 dialog.dismiss()
@@ -233,7 +233,7 @@ class ProfileEditActivity : AppCompatActivity() {
             if (it) {
                 pickUpImageFromCamera()
             } else {
-                Toast.makeText(applicationContext, "İzin verilmedi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.not_allowed_text, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -241,7 +241,7 @@ class ProfileEditActivity : AppCompatActivity() {
             if (it) {
                 pickUpImageFromGallery()
             } else {
-                Toast.makeText(applicationContext, "İzin verilmedi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.not_allowed_text, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -316,13 +316,13 @@ class ProfileEditActivity : AppCompatActivity() {
         //check edittext
         if (binding.profileEditUsernameEditText.text!!.isEmpty()) {
 
-            binding.profileEditUsernameEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+            binding.profileEditUsernameEditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (binding.profileEditEmailEditText.text!!.isEmpty() || !emailControl) {
 
-            binding.profileEditEmailEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+            binding.profileEditEmailEditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else {
 
@@ -350,7 +350,7 @@ class ProfileEditActivity : AppCompatActivity() {
             call.enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
 
-                    Toast.makeText(applicationContext, "Kullanıcı Bilgileri Güncellendi!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, R.string.user_information_updated_text, Toast.LENGTH_SHORT).show()
 
                     editorUsername.putString("username", binding.profileEditUsernameEditText.text.toString().trim())
 
@@ -365,7 +365,7 @@ class ProfileEditActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<User>, t: Throwable) {
 
                     Log.e("Profile Put Error", t.printStackTrace().toString())
-                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
 
                 }
             })

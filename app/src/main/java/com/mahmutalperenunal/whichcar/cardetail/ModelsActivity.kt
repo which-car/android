@@ -64,10 +64,10 @@ class ModelsActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -109,7 +109,7 @@ class ModelsActivity : AppCompatActivity() {
 
                 binding.modelsProgressBar.visibility = View.GONE
 
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
             }
         })
 

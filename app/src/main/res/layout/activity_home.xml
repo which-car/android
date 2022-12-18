@@ -100,7 +100,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 tools:ignore="UseCompoundDrawables">
@@ -113,7 +113,7 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
                     android:text="@string/car_suggestion_text"
@@ -140,7 +140,7 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
                     android:text="@string/car_detail_text"
@@ -165,7 +165,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 tools:ignore="UseCompoundDrawables">
@@ -178,13 +178,14 @@
                     tools:ignore="ContentDescription,ImageContrastCheck" />
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
                     android:text="@string/profile_text"
                     android:textAlignment="center"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:ignore="TextContrastCheck" />
 
             </LinearLayout>
 
@@ -205,7 +206,7 @@
                     tools:ignore="ContentDescription,ImageContrastCheck" />
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
                     android:text="@string/about_text"

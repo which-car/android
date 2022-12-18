@@ -2,9 +2,11 @@ package com.mahmutalperenunal.whichcar.profile
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +24,7 @@ import com.mahmutalperenunal.whichcar.model.auth.Logout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -80,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
 
         //set progressDialog
         progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Çıkış Yapılıyor...")
+        progressDialog.setMessage(R.string.existing_text.toString())
 
 
         //go to profileEditActivity
@@ -104,6 +107,9 @@ class ProfileActivity : AppCompatActivity() {
         //change theme
         binding.profileThemeButton.setOnClickListener { setTheme() }
 
+        //change language
+        binding.profileChangeLanguageButton.setOnClickListener { changeLanguage() }
+
         //logout
         binding.profileLogoutButton.setOnClickListener { logOutDialog() }
 
@@ -112,15 +118,60 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
+    //change app language
+    private fun changeLanguage() {
+
+        val languages = arrayOf(resources.getString(R.string.english_text), resources.getString(R.string.turkish_text))
+
+        androidx.appcompat.app.AlertDialog.Builder(this, R.style.CustomAlertDialog)
+            .setTitle(R.string.app_language_text)
+            .setIcon(R.drawable.language)
+            .setSingleChoiceItems(languages, -1) { dialog, which ->
+                when (which) {
+                    0 -> {
+                        setLocale("en")
+                        recreate()
+                    }
+                    1 -> {
+                        setLocale("tr")
+                        recreate()
+                    }
+                }
+                dialog.dismiss()
+            }
+            .setNeutralButton(R.string.cancel_text) {
+                dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+
+    }
+
+    private fun setLocale(lang: String) {
+
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+
+        val configuration = Configuration()
+        configuration.locale = locale
+        baseContext.resources.updateConfiguration(configuration, baseContext.resources.displayMetrics)
+
+        val editor: SharedPreferences.Editor= getSharedPreferences("Language", Context.MODE_PRIVATE).edit()
+        editor.putString("app language", lang)
+        editor.apply()
+    }
+
+
     //set app theme
     private fun setTheme() {
 
         androidx.appcompat.app.AlertDialog.Builder(this, R.style.CustomAlertDialog)
-            .setTitle("Uygulama Teması")
-            .setMessage("Uygulama temasını seçiniz.\n\nMevcut tema: $themeName")
+            .setTitle(R.string.app_theme_title_text)
+            .setMessage(resources.getString(R.string.app_theme_description_text) + "\n\n${resources.getString(R.string.app_theme_description_text2)} $themeName")
             .setIcon(R.drawable.day_night)
             .setPositiveButton(
-                "Açık"
+                R.string.light_text
             ) { _: DialogInterface?, _: Int ->
                 AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_NO
@@ -129,7 +180,7 @@ class ProfileActivity : AppCompatActivity() {
                 editorTheme.apply()
             }
             .setNegativeButton(
-                "Koyu"
+                R.string.dark_text
             ) { _: DialogInterface?, _: Int ->
                 AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_YES
@@ -138,7 +189,7 @@ class ProfileActivity : AppCompatActivity() {
                 editorTheme.apply()
             }
             .setNeutralButton(
-                "Sistem Teması"
+                R.string.system_default_text
             ) { _: DialogInterface?, _: Int ->
                 AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -170,10 +221,10 @@ class ProfileActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(resources.getString(R.string.no_internet_connection_description_text))
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -213,7 +264,7 @@ class ProfileActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<User>, t: Throwable) {
 
                     Log.e("Profile Error", t.printStackTrace().toString())
-                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
 
                 }
             })
@@ -224,15 +275,15 @@ class ProfileActivity : AppCompatActivity() {
     //show logout dialog
     private fun logOutDialog() {
         AlertDialog.Builder(this, R.style.CustomAlertDialog)
-            .setTitle("Çıkış Yap")
-            .setMessage("Çıkış yapmak istediğinizden emin misiniz?")
+            .setTitle(R.string.logout_text)
+            .setMessage(R.string.logout_description_text)
             .setIcon(R.drawable.question)
-            .setPositiveButton("Çıkış Yap") {
+            .setPositiveButton(R.string.logout_text) {
                     dialog, _ ->
                 logoutProcess()
                 dialog.dismiss()
             }
-            .setNegativeButton("İptal") {
+            .setNegativeButton(R.string.cancel_text) {
                     dialog, _ ->
                 dialog.dismiss()
             }
@@ -277,7 +328,7 @@ class ProfileActivity : AppCompatActivity() {
                 finish()
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
 
-                Toast.makeText(applicationContext, "Çıkış Yapıldı!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.logged_out_text, Toast.LENGTH_SHORT).show()
 
             }
 
@@ -287,7 +338,7 @@ class ProfileActivity : AppCompatActivity() {
 
                 Log.e("Logout Error", t.printStackTrace().toString())
 
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
 
             }
         })

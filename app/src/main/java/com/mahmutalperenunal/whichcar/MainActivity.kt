@@ -1,8 +1,11 @@
 package com.mahmutalperenunal.whichcar
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -62,7 +65,27 @@ class MainActivity : AppCompatActivity() {
 
         checkConnection()
 
+        loadLanguage()
+
         startLoginActivity()
+    }
+
+
+    //load last selected language
+    private fun loadLanguage(){
+        val pref: SharedPreferences = getSharedPreferences("Language", Activity.MODE_PRIVATE)
+        val language: String = pref.getString("app language", "")!!
+        setLocale(language)
+    }
+
+    private fun setLocale(lang: String) {
+        val locale = Locale(lang)
+
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+
+        baseContext.resources.updateConfiguration(config,baseContext.resources.displayMetrics)
     }
 
 
@@ -91,10 +114,10 @@ class MainActivity : AppCompatActivity() {
                 startLoginActivity()
             } else {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()

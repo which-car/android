@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.mahmutalperenunal.whichcar.R
-import com.mahmutalperenunal.whichcar.adapter.detail.CarImageAdapter
+import com.mahmutalperenunal.whichcar.adapter.CarImageAdapter
 import com.mahmutalperenunal.whichcar.api.RetrofitInstance
 import com.mahmutalperenunal.whichcar.databinding.ActivityDetailBinding
 import com.mahmutalperenunal.whichcar.home.HomeActivity
@@ -111,10 +111,10 @@ class DetailActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -168,7 +168,7 @@ class DetailActivity : AppCompatActivity() {
 
                 binding.detailProgressBar.visibility = View.GONE
 
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -194,7 +194,7 @@ class DetailActivity : AppCompatActivity() {
         call.enqueue(object : Callback<CarDetail> {
             override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
 
-                Toast.makeText(applicationContext, "Araç Favorilere Eklendi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.car_added_to_favorites_text, Toast.LENGTH_SHORT).show()
 
             }
 
@@ -202,7 +202,7 @@ class DetailActivity : AppCompatActivity() {
 
                 Log.e("Car Detail Error", t.printStackTrace().toString())
 
-                Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -218,15 +218,10 @@ class DetailActivity : AppCompatActivity() {
                 "" -> {
 
                     AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setTitle("Öneri")
-                        .setMessage("Bu aracı diğer kullanıcılar için öneriyor musunuz?.")
+                        .setTitle(R.string.suggestion_title_text)
+                        .setMessage(R.string.user_suggestion_description_text)
                         .setIcon(R.drawable.question)
-                        .setPositiveButton("Öneriyorum") { dialog, _ ->
-
-                            carFeedback = "Like"
-                            like++
-                            binding.detailLikeTextView.text = like.toString()
-                            binding.detailLikeButton.setImageResource(R.drawable.like)
+                        .setPositiveButton(R.string.recommend_text) { dialog, _ ->
 
                             val retrofit = RetrofitInstance.apiCarDetail
 
@@ -234,7 +229,12 @@ class DetailActivity : AppCompatActivity() {
                             call.enqueue(object : Callback<CarDetail> {
                                 override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
 
-                                    Toast.makeText(applicationContext, "Araç Önerildi!", Toast.LENGTH_SHORT).show()
+                                    carFeedback = "Like"
+                                    like++
+                                    binding.detailLikeTextView.text = like.toString()
+                                    binding.detailLikeButton.setImageResource(R.drawable.like)
+
+                                    Toast.makeText(applicationContext, R.string.car_recommended_text, Toast.LENGTH_SHORT).show()
 
                                 }
 
@@ -242,13 +242,13 @@ class DetailActivity : AppCompatActivity() {
 
                                     Log.e("Car Like Error", t.printStackTrace().toString())
 
-                                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
                                 }
                             })
 
                             dialog.dismiss()
                         }
-                        .setNegativeButton("İptal") { dialog, _ ->
+                        .setNegativeButton(R.string.cancel_text) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .create()
@@ -258,18 +258,10 @@ class DetailActivity : AppCompatActivity() {
                 "Unlike" -> {
 
                     AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setTitle("Öneri")
-                        .setMessage("Bu aracı daha önce diğer kullanıcılar için önermeme işleminde bulundunuz! İşlemi geri alıp, bu aracı diğer kullanıcılar için öneriyor musunuz?.")
+                        .setTitle(R.string.suggestion_title_text)
+                        .setMessage(R.string.user_suggestion_description_text2)
                         .setIcon(R.drawable.question)
-                        .setPositiveButton("Öneriyorum") { dialog, _ ->
-
-                            carFeedback = "Like"
-                            like++
-                            unlike--
-                            binding.detailLikeTextView.text = like.toString()
-                            binding.detailUnlikeTextView.text = unlike.toString()
-                            binding.detailLikeButton.setImageResource(R.drawable.like)
-                            binding.detailUnlikeButton.setImageResource(R.drawable.bad_quality)
+                        .setPositiveButton(R.string.recommend_text) { dialog, _ ->
 
                             val retrofit = RetrofitInstance.apiCarDetail
 
@@ -277,7 +269,15 @@ class DetailActivity : AppCompatActivity() {
                             call.enqueue(object : Callback<CarDetail> {
                                 override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
 
-                                    Toast.makeText(applicationContext, "Araç Önerildi!", Toast.LENGTH_SHORT).show()
+                                    carFeedback = "Like"
+                                    like++
+                                    unlike--
+                                    binding.detailLikeTextView.text = like.toString()
+                                    binding.detailUnlikeTextView.text = unlike.toString()
+                                    binding.detailLikeButton.setImageResource(R.drawable.like)
+                                    binding.detailUnlikeButton.setImageResource(R.drawable.bad_quality)
+
+                                    Toast.makeText(applicationContext, R.string.car_recommended_text, Toast.LENGTH_SHORT).show()
 
                                 }
 
@@ -285,13 +285,13 @@ class DetailActivity : AppCompatActivity() {
 
                                     Log.e("Car Like Error", t.printStackTrace().toString())
 
-                                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
                                 }
                             })
 
                             dialog.dismiss()
                         }
-                        .setNegativeButton("İptal") { dialog, _ ->
+                        .setNegativeButton(R.string.cancel_text) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .create()
@@ -301,21 +301,37 @@ class DetailActivity : AppCompatActivity() {
                 else -> {
 
                     AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setTitle("Öneri")
-                        .setMessage("Bu aracı zaten diğer kullanıcılar için önerdiniz. İşlemi geri almak istiyor musunuz?")
+                        .setTitle(R.string.suggestion_title_text)
+                        .setMessage(R.string.user_suggestion_description_text3)
                         .setIcon(R.drawable.question)
-                        .setPositiveButton("İşlemi Geri Al") { dialog, _ ->
+                        .setPositiveButton(R.string.undo_action_text) { dialog, _ ->
 
-                            carFeedback = ""
-                            like--
-                            binding.detailLikeTextView.text = like.toString()
-                            binding.detailLikeButton.setImageResource(R.drawable.good_quality)
+                            val retrofit = RetrofitInstance.apiCarDetail
 
-                            Toast.makeText(applicationContext, "Araç Önerisi Geri Alındı!", Toast.LENGTH_SHORT).show()
+                            val call: Call<CarDetail> = retrofit.postRecommendData("Token $userToken", brand, model)
+                            call.enqueue(object : Callback<CarDetail> {
+                                override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
+
+                                    carFeedback = ""
+                                    like--
+                                    binding.detailLikeTextView.text = like.toString()
+                                    binding.detailLikeButton.setImageResource(R.drawable.good_quality)
+
+                                    Toast.makeText(applicationContext, R.string.car_recommended_text2, Toast.LENGTH_SHORT).show()
+
+                                }
+
+                                override fun onFailure(call: Call<CarDetail>, t: Throwable) {
+
+                                    Log.e("Car Like Error", t.printStackTrace().toString())
+
+                                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
+                                }
+                            })
 
                             dialog.dismiss()
                         }
-                        .setNegativeButton("İptal") { dialog, _ ->
+                        .setNegativeButton(R.string.cancel_text) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .create()
@@ -332,15 +348,10 @@ class DetailActivity : AppCompatActivity() {
                 "" -> {
 
                     AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setTitle("Öneri")
-                        .setMessage("Bu aracı diğer kullanıcılara önermiyor musunuz?.")
+                        .setTitle(R.string.suggestion_title_text)
+                        .setMessage(R.string.user_suggestion_description_text4)
                         .setIcon(R.drawable.question)
-                        .setPositiveButton("Önermiyorum") { dialog, _ ->
-
-                            carFeedback = "Unlike"
-                            unlike++
-                            binding.detailUnlikeTextView.text = unlike.toString()
-                            binding.detailUnlikeButton.setImageResource(R.drawable.unlike)
+                        .setPositiveButton(R.string.not_recommend_text) { dialog, _ ->
 
                             val retrofit = RetrofitInstance.apiCarDetail
 
@@ -352,7 +363,12 @@ class DetailActivity : AppCompatActivity() {
                                     response: Response<CarDetail>
                                 ) {
 
-                                    Toast.makeText(applicationContext, "Araç Önerilmedi!", Toast.LENGTH_SHORT).show()
+                                    carFeedback = "Unlike"
+                                    unlike++
+                                    binding.detailUnlikeTextView.text = unlike.toString()
+                                    binding.detailUnlikeButton.setImageResource(R.drawable.unlike)
+
+                                    Toast.makeText(applicationContext, R.string.car_not_recommended_text, Toast.LENGTH_SHORT).show()
 
                                 }
 
@@ -360,13 +376,13 @@ class DetailActivity : AppCompatActivity() {
 
                                     Log.e("Car Like Error", t.printStackTrace().toString())
 
-                                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
                                 }
                             })
 
                             dialog.dismiss()
                         }
-                        .setNegativeButton("İptal") { dialog, _ ->
+                        .setNegativeButton(R.string.cancel_text) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .create()
@@ -376,18 +392,10 @@ class DetailActivity : AppCompatActivity() {
                 "Like" -> {
 
                     AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setTitle("Öneri")
-                        .setMessage("Bu aracı daha önce diğer kullanıcılar için önerme işleminde bulundunuz! İşlemi geri alıp, bu aracı diğer kullanıcılar için önermiyor musunuz?.")
+                        .setTitle(R.string.suggestion_title_text)
+                        .setMessage(R.string.user_suggestion_description_text5)
                         .setIcon(R.drawable.question)
-                        .setPositiveButton("Önermiyorum") { dialog, _ ->
-
-                            carFeedback = "Unlike"
-                            unlike++
-                            like--
-                            binding.detailUnlikeTextView.text = unlike.toString()
-                            binding.detailLikeTextView.text = like.toString()
-                            binding.detailUnlikeButton.setImageResource(R.drawable.unlike)
-                            binding.detailLikeButton.setImageResource(R.drawable.good_quality)
+                        .setPositiveButton(R.string.not_recommend_text) { dialog, _ ->
 
                             val retrofit = RetrofitInstance.apiCarDetail
 
@@ -399,7 +407,15 @@ class DetailActivity : AppCompatActivity() {
                                     response: Response<CarDetail>
                                 ) {
 
-                                    Toast.makeText(applicationContext, "Araç Önerilmedi!", Toast.LENGTH_SHORT).show()
+                                    carFeedback = "Unlike"
+                                    unlike++
+                                    like--
+                                    binding.detailUnlikeTextView.text = unlike.toString()
+                                    binding.detailLikeTextView.text = like.toString()
+                                    binding.detailUnlikeButton.setImageResource(R.drawable.unlike)
+                                    binding.detailLikeButton.setImageResource(R.drawable.good_quality)
+
+                                    Toast.makeText(applicationContext, R.string.car_not_recommended_text, Toast.LENGTH_SHORT).show()
 
                                 }
 
@@ -407,13 +423,13 @@ class DetailActivity : AppCompatActivity() {
 
                                     Log.e("Car Like Error", t.printStackTrace().toString())
 
-                                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
                                 }
                             })
 
                             dialog.dismiss()
                         }
-                        .setNegativeButton("İptal") { dialog, _ ->
+                        .setNegativeButton(R.string.cancel_text) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .create()
@@ -423,22 +439,42 @@ class DetailActivity : AppCompatActivity() {
                 else -> {
 
                     AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setTitle("Öneri")
-                        .setMessage("Bu aracı zaten diğer kullanıcılar için önermediniz. İşlemi geri almak istiyor musunuz?")
+                        .setTitle(R.string.suggestion_title_text)
+                        .setMessage(R.string.user_suggestion_description_text6)
                         .setIcon(R.drawable.question)
-                        .setPositiveButton("İşlemi Geri Al") {
+                        .setPositiveButton(R.string.undo_action_text) {
                                 dialog, _ ->
 
-                            carFeedback = ""
-                            unlike--
-                            binding.detailUnlikeTextView.text = unlike.toString()
-                            binding.detailUnlikeButton.setImageResource(R.drawable.bad_quality)
+                            val retrofit = RetrofitInstance.apiCarDetail
 
-                            Toast.makeText(applicationContext, "Araç Önerilmeme İşlemi Geri Alındı!", Toast.LENGTH_SHORT).show()
+                            val call: Call<CarDetail> =
+                                retrofit.postRecommendData("Token $userToken", brand, model)
+                            call.enqueue(object : Callback<CarDetail> {
+                                override fun onResponse(
+                                    call: Call<CarDetail>,
+                                    response: Response<CarDetail>
+                                ) {
+
+                                    carFeedback = ""
+                                    unlike--
+                                    binding.detailUnlikeTextView.text = unlike.toString()
+                                    binding.detailUnlikeButton.setImageResource(R.drawable.bad_quality)
+
+                                    Toast.makeText(applicationContext, R.string.car_not_recommended_text2, Toast.LENGTH_SHORT).show()
+
+                                }
+
+                                override fun onFailure(call: Call<CarDetail>, t: Throwable) {
+
+                                    Log.e("Car Like Error", t.printStackTrace().toString())
+
+                                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
+                                }
+                            })
 
                             dialog.dismiss()
                         }
-                        .setNegativeButton("İptal") { dialog, _ ->
+                        .setNegativeButton(R.string.cancel_text) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .create()

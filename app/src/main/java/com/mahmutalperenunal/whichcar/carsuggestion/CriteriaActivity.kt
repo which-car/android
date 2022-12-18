@@ -74,10 +74,10 @@ class CriteriaActivity : AppCompatActivity() {
         networkConnection.observe(this, androidx.lifecycle.Observer { isConnected ->
             if (!isConnected) {
                 AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setTitle("İnternet Bağlantısı Yok")
-                    .setMessage("Lütfen internet bağlantınızı kontrol edin!")
+                    .setTitle(R.string.no_internet_connection_title_text)
+                    .setMessage(R.string.no_internet_connection_description_text)
                     .setIcon(R.drawable.without_internet)
-                    .setNegativeButton("Tamam") {
+                    .setNegativeButton(R.string.ok_text) {
                             dialog, _ ->
                         checkConnection()
                         dialog.dismiss()
@@ -109,15 +109,15 @@ class CriteriaActivity : AppCompatActivity() {
         val adapterSafetyList = ArrayAdapter(this, R.layout.selectable_criteria_list, safetyList)
         binding.criteriaSafetyEditText.setAdapter(adapterSafetyList)
 
-        val gearboxList = listOf("Farketmez", "Otomatik", "Manuel")
+        val gearboxList = listOf(R.string.it_does_not_matter_text, R.string.automatic_text, R.string.manual_text)
         val adapterGearboxList = ArrayAdapter(this, R.layout.selectable_criteria_list, gearboxList)
         binding.criteriaGearboxEditText.setAdapter(adapterGearboxList)
 
-        val chassisTypeList = listOf("Farketmez", "Coupe", "Hatchback", "Sedan", "SUV")
+        val chassisTypeList = listOf(R.string.it_does_not_matter_text, "Coupe", "Hatchback", "Sedan", "SUV")
         val adapterChassisTypeList = ArrayAdapter(this, R.layout.selectable_criteria_list, chassisTypeList)
         binding.criteriaChassisTypeEditText.setAdapter(adapterChassisTypeList)
 
-        val wheelDriveList = listOf("Farketmez", "Önden", "Arkadan", "4x4")
+        val wheelDriveList = listOf(R.string.it_does_not_matter_text, "Önden", "Arkadan", "4x4")
         val adapterWheelDriveList = ArrayAdapter(this, R.layout.selectable_criteria_list, wheelDriveList)
         binding.criteriaWheelDriveEditText.setAdapter(adapterWheelDriveList)
 
@@ -148,56 +148,56 @@ class CriteriaActivity : AppCompatActivity() {
         if (baggageSize == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaBaggageSizeEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaBaggageSizeEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (fuelEfficiency == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaFuelEfficiencyEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaFuelEfficiencyEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (performance == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaPerformanceEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaPerformanceEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (safety == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaSafetyEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaSafetyEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (gearbox == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaGearboxEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaGearboxEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (chassisType == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaChassisTypeEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaChassisTypeEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (wheelDrive == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaWheelDriveEditText.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaWheelDriveEditText.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (minPrice == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaMinPriceEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaMinPriceEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else if (maxPrice == "") {
 
             if (progressDialog.isShowing) progressDialog.dismiss()
-            binding.criteriaMaxPriceEditTextLayout.error = "Zorunlu"
-            Toast.makeText(applicationContext, "Lütfen Tüm Alanları Doldurun!", Toast.LENGTH_SHORT).show()
+            binding.criteriaMaxPriceEditTextLayout.error = resources.getString(R.string.compulsory_text)
+            Toast.makeText(applicationContext, R.string.fill_all_fields_text, Toast.LENGTH_SHORT).show()
 
         } else {
 
@@ -219,7 +219,7 @@ class CriteriaActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<CarSuggestion>, t: Throwable) {
 
                     Log.e("Car Suggestion Error", t.printStackTrace().toString())
-                    Toast.makeText(applicationContext, "İşlem Başarısız!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, R.string.operation_failed_text, Toast.LENGTH_SHORT).show()
                 }
             })
 
