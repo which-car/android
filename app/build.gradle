@@ -61,4 +61,7 @@ dependencies {
     //circle indicator
     implementation 'me.relex:circleindicator:2.1.6'
 
+    //touch imageview
+    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.1'
+
 }

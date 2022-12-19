@@ -8,11 +8,11 @@
     android:adjustViewBounds="true"
     app:cardCornerRadius="20dp">
 
-    <ImageView
+    <com.ortiz.touchview.TouchImageView
         android:id="@+id/car_container_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/car"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
 </androidx.cardview.widget.CardView>
